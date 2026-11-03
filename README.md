@@ -2,7 +2,7 @@
 
 Projet final de Coding for AI & Data Science. Un petit assistant répond à des questions chiffrées sur les séries TV (données ouvertes IMDb) et refuse tout chiffre qui n'a pas été calculé par du code.
 
-État actuel : le modèle local et le nettoyage des données fonctionnent. L'outil de calcul, l'arbitre et le benchmark restent à construire.
+État actuel : le modèle local, le nettoyage des données, l'outil de calcul et la boucle avec Qwen fonctionnent. L'arbitre et le benchmark restent à construire.
 
 ## Prérequis
 
@@ -33,6 +33,16 @@ Projet final de Coding for AI & Data Science. Un petit assistant répond à des 
         python clean.py
 
 Résultat : `data/series_clean.csv` et `cleaning_journal.json`.
+
+5. Tests (ils n'ont pas besoin du modèle ni des données) :
+
+        pytest -v
+
+6. Poser une question à l'assistant (Ollama doit être lancé) :
+
+        python agent.py "Combien de séries Drama ont commencé en 2015 ?"
+
+La réponse s'affiche, et la trace de l'échange est écrite dans `traces/`.
 
 ## Données
 

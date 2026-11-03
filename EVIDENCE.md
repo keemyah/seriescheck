@@ -14,7 +14,19 @@ Ce que je montre : un nettoyage de 307 637 séries IMDb, avec un journal produit
 Fichiers : `clean.py`, `explore.py`, `cleaning_journal.json`.
 Commande : `bash download_data.sh && python explore.py && python clean.py`
 
-## Brique 1 : à venir
+## Brique 1 : votre propre outil
+
+Ce que je montre : une fonction que j'ai écrite, `compute`, que Qwen appelle dans une boucle que j'ai écrite, avec la trace d'un vrai appel et son résultat.
+
+- L'outil : `compute(df, operation, column, year, genre, reliable_only)` dans `tools.py`. Il ne fait que 4 opérations (`count`, `median`, `max`, `percent`) sur 5 colonnes permises (liste blanche). Le modèle choisit les paramètres, le code fait le calcul.
+- La boucle : `ask()` dans `agent.py`. Qwen reçoit la question et la description de l'outil ; s'il demande un appel, le code l'exécute et lui renvoie le résultat ; on s'arrête à sa réponse en texte, ou après 5 tours au maximum.
+- La trace d'un vrai appel : `traces/2026-11-03_15-55-50.json`. À la question « Combien de séries Drama ont commencé en 2015 ? », Qwen a appelé `compute(operation="count", genre="Drama", year=2015)`, l'outil a renvoyé 1 591, et Qwen a répondu « Il y a eu 1591 séries de genre Drama qui ont commencé en 2015. » (15,4 s, modèle `qwen35-4b-8k`, raisonnement désactivé).
+- Contrôle : 1 591 est aussi le chiffre obtenu en appelant `compute` directement, sans le modèle.
+- Tests : `tests/test_tools.py` (13 tests de l'outil sur 8 séries écrites à la main) et `tests/test_agent.py` (7 tests de la boucle avec un faux modèle : exécution de l'outil, résultat renvoyé au modèle, arrêt après le nombre maximum de tours, outil ou paramètre inconnu refusé).
+
+Fichiers : `tools.py`, `agent.py`, `traces/`, `tests/`.
+Commande (Ollama lancé) : `python agent.py "Combien de séries Drama ont commencé en 2015 ?"` crée une nouvelle trace dans `traces/`. Tests : `pytest -v`.
+
 ## Brique 3 : à venir
 ## Brique 8 : à venir
 ## Brique 9 : à venir
