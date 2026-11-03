@@ -51,3 +51,33 @@ Objectif : tester l'outil de calcul, écrire la boucle où Qwen appelle l'outil 
 
 ## Sources
 - Aucune nouvelle source externe.
+
+
+# Séance des 2026-11-03 et 2026-11-04 (3) : benchmark et intervalles de confiance
+
+Outil d'IA : Claude Code (application desktop), même session, exportée dans conversation_claude_code.md.
+
+Objectif : comparer mon système à Qwen seul (brique 9), calculer des intervalles de confiance sur les résultats (brique 8), remplir EVIDENCE.md pour ces deux briques.
+
+## Gardé tel quel
+- Les fichiers écrits par l'IA : expected.py, benchmark.py, stats.py, tests/test_benchmark.py, tests/test_stats.py, le paramètre `tools` ajouté à `call_ollama` dans agent.py, les sections Brique 8 et Brique 9 d'EVIDENCE.md, l'étape 7 du README.
+- J'ai lu expected.py, benchmark.py et stats.py.
+
+## Corrigé à la main
+- Rien.
+
+## Pseudo-code ou prompt réécrit
+- Rien. Le prompt de Qwen seul (« Réponds à la question par un nombre, en une phrase. ») a été proposé par l'IA et validé par moi.
+
+## Correction après le benchmark
+- Après le premier lancement, l'IA a remarqué que la notation comptait comme « faux » trois refus de Qwen seul qui citaient seulement l'année de la question (par exemple 2015). J'ai validé la correction : les nombres de la question ne comptent plus comme une réponse. Les réponses enregistrées ont été re-notées sans relancer Qwen. Les scores « justes » n'ont pas changé ; Qwen seul passe de 18 faux / 12 refusés à 15 / 15.
+
+## Décisions prises par moi
+- J'ai validé la conception du benchmark : les 10 questions, les deux candidats, 3 lancements, des réponses attendues calculées sans passer par l'outil, et une notation stricte (7,25 pour 7,3 compte faux).
+- Brique 8 : j'ai choisi l'intervalle de Wilson plutôt que la formule simple (qui dépasse 100 % ou donne un intervalle nul sur mes résultats), et de montrer aussi une version prudente sur les 10 questions.
+- Mes phrases dans EVIDENCE.md :
+  - conclusion : mon système est bien meilleur que Qwen seul, comme le montrent les résultats des briques 8 et 9 ;
+  - limite : mes données ne permettent pas de généraliser car le nombre de questions est limité.
+
+## Sources
+- Aucune nouvelle source externe.

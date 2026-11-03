@@ -1,4 +1,4 @@
-# Session Claude Code (application desktop), 2026-11-03
+# Session Claude Code (application desktop), 2026-11-03 et 2026-11-04
 
 Export de la session : mes messages, les réponses de Claude Code, et la liste des outils qu'il a lancés (sans leurs sorties). Le fichier complet exporté par l'application est un zip, gardé hors du dépôt.
 
@@ -774,5 +774,585 @@ j'ai lu les deux, dans agent.py juste le dernier bloc qui n'est pas clair. je n'
 ## Claude Code
 
 La conversation claude.ai est complète (3 982 lignes) et ne contient aucun secret, seulement des mentions du mot. J'exporte maintenant cette session.
+
+*[outil : ToolSearch] *
+
+*[outil : mcp__ccd_session_mgmt__export_transcript] *
+
+*[outil : Bash] Unpack the session export into a temp folder*
+
+*[outil : Bash] Convert the session transcript to readable Markdown*
+
+*[outil : Bash] Save the readable session export into ai_log*
+
+*[outil : Bash] Show the last block of agent.py*
+
+## Claude Code
+
+Le journal R3 est à jour. Rien n'est encore commité.
+
+## Ce que j'ai fait
+- **[note.md](ai_log/2026-11-03_setup/note.md)** :
+  - J'ai retiré les lignes de commande et la vieille version avec la mauvaise date.
+  - J'ai gardé ta note de la première séance telle quelle.
+  - J'ai ajouté une section « Séance (2) » écrite à partir de tes réponses :
+    - tout le code écrit par l'IA, gardé tel quel ;
+    - tu as lu `agent.py` et `arbiter.py`, mais le dernier bloc d'`agent.py` reste à revoir ;
+    - rien de corrigé à la main ;
+    - les règles de l'arbitre que tu as validées ;
+    - la liste de constantes, choisie « parce que ça évite des erreurs ».
+- **[conversation.md](ai_log/2026-11-03_setup/conversation.md)** : la conversation claude.ai complète (3 982 lignes au lieu de 152), avec le lien de partage en tête. Elle ne contient aucune clé ni aucun mot de passe : seulement des passages qui parlent de clés et de mots de passe.
+- **[conversation_claude_code.md](ai_log/2026-11-03_setup/conversation_claude_code.md)** : cette session, avec tes messages, mes réponses et la liste des outils lancés, sans leurs sorties. Je n'y ai pas mis ton adresse e-mail. L'export complet de l'application est un zip dans ton dossier Téléchargements (`session-export-….zip`). Il reste hors du dépôt, car il contient aussi des données techniques de la session.
+
+L'export s'arrête à maintenant. À la fin de la session, il faudra le refaire pour inclure la suite.
+
+## Le dernier bloc d'`agent.py`, expliqué
+
+```python
+if __name__ == "__main__":
+```
+Cette ligne veut dire « seulement si on lance ce fichier directement ». Quand tu tapes `python agent.py "..."`, Python donne au fichier le nom `"__main__"`, et le bloc s'exécute. Quand les tests font `from agent import ask`, le fichier est **importé**, il s'appelle `"agent"`, et le bloc est ignoré. Sans cette ligne, lancer `pytest` appellerait Qwen.
+
+```python
+    if len(sys.argv) < 2:
+        print('Usage : python agent.py "ta question"')
+        sys.exit(1)
+```
+`sys.argv` est la liste des mots tapés dans le terminal. `sys.argv[0]` est le nom du fichier (`agent.py`), et `sys.argv[1]` est ta question. Si tu oublies la question, la liste n'a qu'un élément. Le programme affiche alors comment l'utiliser et s'arrête : c'est un cas limite géré.
+
+```python
+    trace = ask(sys.argv[1], load_series())
+```
+Cette ligne charge les données, puis lance la boucle avec ta question.
+
+```python
+    for step in trace["steps"]:
+        print(f"Appel : {step['tool']}({step['arguments']}) -> {step['result']}")
+    print("Réponse du modèle :", trace["answer"])
+    print("Réponse finale :", trace["final"])
+    print("Trace :", save_trace(trace))
+```
+Ces lignes affichent chaque appel d'outil, puis la réponse brute de Qwen et ce que l'arbitre laisse sortir. Enfin, elles enregistrent la trace et affichent son chemin.
+
+En résumé : tout le travail est dans `ask()`. Ce bloc ne fait que brancher le terminal sur `ask()`.
+
+## Moi
+
+Oui, commite
+
+*[outil : Bash] Commit the AI log updates*
+
+## Claude Code
+
+C'est commité : `2b31026 ai_log : note de seance 2, conversations completes`. Le dépôt est propre.
+
+## Où en est le projet
+
+| Élément | État |
+|---|---|
+| Briques 1, 3 et 6 | Terminées, avec preuves dans EVIDENCE.md |
+| Brique 9, comparaison mesurée | À faire |
+| Brique 8, incertitude | À faire, à partir des résultats de la brique 9 |
+| R2, tests | 40 tests qui passent |
+| R3, journal de l'IA | À jour jusqu'ici. Refaire l'export de la session à la fin |
+
+Deux choses restent en suspens, sans urgence :
+- **GitHub** : tes 7 commits n'existent que sur ton Mac.
+- **R1** : à la fin du projet, il faudra cloner le dépôt dans un autre dossier et suivre le README mot à mot pour vérifier qu'il tourne sur un clone tout neuf.
+
+## Moi
+
+Oui, explique d'abord
+
+## Claude Code
+
+## La brique 9 : ce que le sujet demande
+> Au moins 10 tâches dont la réponse est connue ; votre système face à votre modèle seul ; au moins 3 lancements chacun ; moyenne et dispersion ; un échec expliqué à partir de sa trace.
+
+La brique 9 répond à une question simple : **ton système fait-il vraiment mieux que Qwen tout seul ?**
+
+## Les deux candidats
+
+| Candidat | Ce qu'il fait |
+|---|---|
+| **A. Ton système** | `ask()` : Qwen, l'outil `compute`, puis l'arbitre |
+| **B. Qwen seul** | La même question envoyée à Qwen, sans outil et sans arbitre, avec la consigne « réponds par un nombre » |
+
+## Les 10 questions (ma proposition)
+Ce sont les 6 questions déjà choisies, plus 4 nouvelles qui couvrent d'autres combinaisons :
+
+| # | Question | Opération |
+|---|---|---|
+| 1 | Combien de séries ont commencé en 2015 ? | compter |
+| 2 | Combien de séries Drama ont commencé en 2015 ? | compter + genre + année |
+| 3 | Quelle est la note médiane des séries à note fiable ? | médiane |
+| 4 | Quelle est la note maximale des séries à note fiable ? | maximum |
+| 5 | Quelle part des séries a une date de fin renseignée ? | pourcentage |
+| 6 | Combien de séries Comedy sont à note fiable ? | compter + genre + fiable |
+| 7 | Combien de séries ont commencé en 2020 ? | compter |
+| 8 | Combien de séries Crime sont à note fiable ? | compter + genre + fiable |
+| 9 | Quel est le nombre médian de votes des séries à note fiable ? | médiane, autre colonne |
+| 10 | Quelle part des séries commencées en 2010 a une date de fin ? | pourcentage + année |
+
+J'évite volontairement les moyennes de durée : on a vu qu'elles étaient fragiles.
+
+## Le piège des « réponses connues »
+Si les réponses attendues étaient calculées avec `compute()`, une erreur dans l'outil serait aussi dans l'attendu, et elle passerait inaperçue. Je propose donc un petit fichier `expected.py` qui calcule les 10 réponses **directement avec pandas, sans passer par `tools.py`**. Les filtres y sont écrits autrement.
+
+Les deux calculs, indépendants, doivent tomber d'accord. Tu pourras aussi en vérifier un ou deux à la main.
+
+Ces réponses sont recalculées à chaque lancement : les données IMDb changent chaque jour, donc un clone tout neuf aura d'autres chiffres justes.
+
+## Comment on note une réponse
+On extrait les nombres de la réponse finale, avec la même fonction que l'arbitre, et on donne un verdict :
+
+| Verdict | Signification |
+|---|---|
+| **Juste** | Le nombre attendu est dans la réponse |
+| **Faux** | Il y a un nombre, mais pas le bon |
+| **Refusé ou sans réponse** | L'arbitre a bloqué la réponse, ou il n'y a aucun nombre |
+
+Distinguer « faux » et « refusé » est important pour ton projet. Un système qui dit « je refuse » au lieu de donner un faux chiffre est **plus sûr**, même s'il n'a pas répondu juste. C'est exactement ce que l'arbitre doit montrer.
+
+## Le déroulement
+- 10 questions × 3 lancements × 2 candidats = **60 appels à Qwen**.
+- Avec ton système, un appel prend environ 15 s. Le tout prendra 15 à 20 minutes, et je le lancerai en arrière-plan.
+- Toutes les traces vont dans `results/`. Un résumé donne, par candidat :
+  - le score de chaque lancement (sur 10) ;
+  - la **moyenne** ;
+  - l'**écart-type** (la dispersion) ;
+  - le nombre de réponses fausses et de réponses refusées.
+
+## Ensuite : l'échec expliqué et la brique 8
+- **L'échec expliqué** : on prendra une question où ton système a échoué, et on ouvrira sa trace pour dire précisément pourquoi. Par exemple : mauvais paramètre choisi, mauvaise colonne, ou réponse refusée par l'arbitre.
+- **La brique 8** : avec le nombre de réponses justes sur 30 pour chaque candidat, on calculera un intervalle de confiance. Il faudra aussi écrire la phrase sur ce que les données ne permettent pas de conclure. Par exemple : relancer 3 fois les mêmes 10 questions ne donne pas 30 observations indépendantes.
+
+## Une limite à assumer
+Qwen seul ne peut pas connaître ces chiffres IMDb : il va sûrement inventer presque tout. La comparaison semblera donc très déséquilibrée. C'est honnête et c'est le cœur du sujet (« un LLM auquel on ne peut pas se fier d'emblée »). Mais à la soutenance, dis-le toi-même : l'intérêt n'est pas seulement le score de B, c'est **combien de faux chiffres chaque système laisse sortir**.
+
+## Trois décisions pour toi
+1. **Les 10 questions** : tu gardes ma liste ou tu en changes certaines ?
+2. **Les décimales** : si l'attendu est 7,3 et que Qwen seul écrit « 7,3 », c'est juste. S'il écrit « 7,25 », je propose de compter faux. On applique la même règle stricte que l'arbitre.
+3. **Le prompt de Qwen seul** : « Réponds à la question par un nombre, en une phrase. » Je propose de ne pas lui dire que les données viennent d'IMDb nettoyé, puisqu'il ne peut pas les voir de toute façon.
+
+## Moi
+
+Oui, écris-le
+
+*[outil : Write] /Users/keemyah/Documents/CodingForAI/final/expected.py*
+
+*[outil : Read] /Users/keemyah/Documents/CodingForAI/final/agent.py*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/agent.py*
+
+*[outil : Write] /Users/keemyah/Documents/CodingForAI/final/benchmark.py*
+
+*[outil : Write] /Users/keemyah/Documents/CodingForAI/final/tests/test_benchmark.py*
+
+*[outil : Bash] Run all tests*
+
+## Claude Code
+
+Les 50 tests passent. Je compare maintenant les réponses attendues à celles de l'outil sur les vraies données :
+
+*[outil : Bash] Compare expected answers with the tool on real data*
+
+## Claude Code
+
+Les 10 réponses attendues concordent avec l'outil. Je lance le benchmark en arrière-plan (60 appels, environ 15 à 20 minutes) :
+
+*[outil : Bash] Run the 3-run benchmark in the background*
+
+## Claude Code
+
+Le benchmark tourne en arrière-plan. Je te préviens dès qu'il a fini. Pendant ce temps, voici ce qui a été écrit.
+
+## Les fichiers
+- **[expected.py](expected.py)** : les 10 questions et leurs réponses attendues, calculées **sans `tools.py`**. Les calculs sont écrits autrement que dans l'outil :
+  - pour le genre, une expression régulière au lieu de découper la liste ;
+  - pour la note fiable, `numVotes >= 1000` recalculé au lieu d'utiliser la colonne `note_fiable`.
+
+  Lancé seul, le fichier compare ses réponses à celles de l'outil. **Les 10 concordent** : par exemple 11 333 séries en 2015, 1 591 séries Drama en 2015, une note médiane de 7,3, et 40,0 % pour les séries de 2010.
+- **[benchmark.py](benchmark.py)** : il fait tourner les deux candidats et donne un verdict à chaque réponse (juste, faux ou refusé). Il écrit `results/runs.json` après chaque réponse, pour que rien ne soit perdu en cas d'arrêt, puis `results/summary.json` avec la moyenne et l'écart-type.
+- **[agent.py](agent.py)** : un seul petit changement. `call_ollama` accepte maintenant `tools=()`, ce qui permet d'interroger Qwen sans aucun outil (le candidat « Qwen seul »).
+- **[tests/test_benchmark.py](tests/test_benchmark.py)** : 10 tests.
+  - La notation : 7,25 au lieu de 7,3 compte faux, et une réponse sans nombre compte comme refusée.
+  - « Qwen seul » ne reçoit aucun outil.
+  - La moyenne et l'écart-type sont vérifiés sur un exemple calculé à la main.
+  - Les réponses attendues sont vérifiées à la main sur un tableau de 8 séries, et elles concordent avec l'outil.
+
+Au total, **50 tests passent**.
+
+## Pendant que ça tourne
+Quand le benchmark sera fini, je te montrerai le résumé. Ensuite, on choisira ensemble un échec de ton système, et on ouvrira sa trace pour l'expliquer : c'est la dernière preuve exigée pour la brique 9.
+
+Le benchmark utilise beaucoup la mémoire. Évite d'ouvrir des applications lourdes en attendant, et surveille la pression mémoire si ton Mac ralentit.
+
+*[outil : Bash] Show benchmark output*
+
+*[outil : Bash] Inspect the traces of the system's failures*
+
+## Claude Code
+
+Le benchmark est terminé : ton système donne 9 bonnes réponses sur 10 à chaque lancement, Qwen seul aucune. En relisant les réponses, j'ai trouvé un défaut dans ma façon de noter.
+
+## Les résultats
+
+| Candidat | Lancement 1 | Lancement 2 | Lancement 3 | Moyenne | Écart-type | Faux | Refusés |
+|---|---|---|---|---|---|---|---|
+| **Ton système** | 9 | 9 | 9 | **9 / 10** | 0 | **1** | 2 |
+| **Qwen seul** | 0 | 0 | 0 | **0 / 10** | 0 | **18** | 12 |
+
+Ce qui compte le plus pour ton projet : **sur 30 réponses, ton système n'a laissé sortir qu'un seul chiffre faux, contre 18 pour Qwen seul.** Qwen seul invente des chiffres comme « 83 % », « 4,50 » ou « 24 », alors que les vraies valeurs sont 39,6 %, 7,3 et 1 911.
+
+## Les 3 échecs de ton système, expliqués par leurs traces
+- **Le seul faux (lancement 1, tâche 6), ton « échec expliqué ».** La question était « Combien de séries Comedy sont à note fiable ? ». Qwen a choisi `percent` au lieu de `count`. L'outil a renvoyé 100,0 : 100 % des séries Comedy fiables ont une note, ce qui est vrai mais ne répond pas à la question. Comme 100 vient bien d'un outil, l'arbitre l'a accepté. C'est exactement la limite écrite dans EVIDENCE.md : **l'arbitre vérifie qu'un chiffre a été calculé, pas qu'il répond à la bonne question.**
+- **Refusé (lancement 2, tâche 5).** L'outil a donné 39,6, et Qwen a écrit « près de 40 % ». L'arbitre a bloqué l'arrondi, comme tu l'avais décidé. C'est un raté évité, au prix d'une réponse manquée.
+- **Refusé (lancement 3, tâche 6).** Qwen a encore choisi `percent`, cette fois sans colonne. L'outil a renvoyé une erreur, puis Qwen a parlé de « 100% » sans l'avoir calculé, et l'arbitre l'a bloqué.
+
+Ces trois échecs ont la même cause : **Qwen confond « combien… à note fiable » avec un pourcentage.** Le lancement 1 de la tâche 8 a fait la même erreur, mais il a été compté juste par chance : le bon chiffre, 1 911, apparaissait dans `rows_used`.
+
+## Le défaut de ma notation
+Pour Qwen seul, certaines réponses sont comptées « faux » alors que ce sont des refus. Par exemple : « Je ne peux pas répondre… les séries qui ont commencé en **2015**… ». La notation a trouvé le nombre 2015, qui vient de la question, et a conclu que c'était une réponse fausse. Ce cas concerne 3 réponses.
+
+**La correction :** ignorer les nombres qui figurent déjà dans la question avant de noter. Je n'ai pas besoin de relancer Qwen : toutes les réponses sont enregistrées dans `results/runs.json`, il suffit de les re-noter. Les scores « justes » ne changeront pas. Pour Qwen seul, les compteurs passeront à environ 15 faux et 15 refusés. J'ajouterai un test pour ce cas.
+
+## Deux limites à assumer pour la brique 8
+- **Pas de dispersion.** L'écart-type est de 0 pour les deux candidats. Tes 3 lancements ne montrent donc presque aucune variation, et l'intervalle de confiance devra être calculé sur les 30 réponses plutôt que sur les 3 scores.
+- **La notation est généreuse.** Une réponse compte juste si le bon nombre apparaît quelque part dans la phrase, même dans une phrase confuse (tâche 8, lancement 1). C'est à écrire dans les limites.
+
+## Moi
+
+Oui, corrige
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/benchmark.py*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/benchmark.py*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/benchmark.py*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/benchmark.py*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/tests/test_benchmark.py*
+
+*[outil : Bash] Run all tests*
+
+*[outil : Bash] Re-grade saved answers and list verdicts*
+
+## Claude Code
+
+J'ai corrigé la notation et re-noté les 30 réponses déjà enregistrées, sans rappeler Qwen. Rien n'est encore commité.
+
+## Ce qui a changé
+- **`grade()` dans [benchmark.py](benchmark.py)** ignore maintenant les nombres qui figurent déjà dans la question. « Je ne connais pas les séries de 2015 » compte comme un refus, plus comme une réponse fausse.
+- **La commande `python benchmark.py --rescore`** re-note `results/runs.json` et réécrit `results/summary.json`, sans rappeler Qwen. Elle resservira si la notation change encore.
+- **2 nouveaux tests** :
+  - un nombre de la question n'est pas une réponse ;
+  - un nombre inventé reste « faux » même quand la question contient une année.
+
+  Au total, **52 tests passent**.
+
+## Les résultats corrigés
+
+| Candidat | Justes par lancement | Moyenne | Écart-type | Justes | Faux | Refusés |
+|---|---|---|---|---|---|---|
+| **Ton système** | 9, 9, 9 | **9 / 10** | 0 | 27 | **1** | 2 |
+| **Qwen seul** | 0, 0, 0 | **0 / 10** | 0 | 0 | **15** | 15 |
+
+Trois réponses de Qwen seul sont passées de « faux » à « refusé ». Ce sont exactement celles que j'avais repérées : lancement 1 tâche 1, lancement 3 tâches 2 et 10. Les scores « justes » n'ont pas changé.
+
+**Ce qu'il faut retenir pour la soutenance :** Qwen seul a laissé sortir 15 chiffres faux sur 30 réponses, ton système 1 seul. Ce faux vient d'un mauvais choix d'opération (`percent` au lieu de `count`), pas d'un chiffre inventé.
+
+## Une précision sur les fichiers
+`results/benchmark_log.txt` est l'affichage brut pendant l'exécution, avec les **anciens** verdicts. Je propose de le garder comme trace brute, mais les chiffres officiels sont dans `results/summary.json` et `results/runs.json`. Je le préciserai dans EVIDENCE.md.
+
+## Moi
+
+Oui, commite
+
+*[outil : Bash] Commit the benchmark and its results*
+
+## Claude Code
+
+C'est commité : `d7ea3ec Benchmark brique 9 : systeme contre Qwen seul, 3 lancements, resultats`. Le dépôt est propre.
+
+Le commit contient :
+- `expected.py` et `benchmark.py` ;
+- le petit changement dans `agent.py` (le paramètre `tools`) ;
+- les 12 tests du benchmark ;
+- le dossier `results/` : le log brut, les 60 réponses avec leurs traces, et le résumé.
+
+## Où en est le projet
+
+| Élément | État |
+|---|---|
+| Briques 1, 3 et 6 | Terminées, dans EVIDENCE.md |
+| Brique 9 | **Fonctionnelle avec résultats**, mais pas encore dans EVIDENCE.md |
+| Brique 8 | À faire : les intervalles de confiance sur les 27/30 et 0/30 |
+| R2, tests | 52 tests qui passent |
+| R3, journal de l'IA | À compléter pour le benchmark : questions, notation corrigée, tes validations |
+
+Les deux sont liés. La section Brique 9 d'EVIDENCE.md peut attendre la brique 8 pour présenter les résultats et leurs intervalles ensemble. Mais elle peut aussi être écrite tout de suite, pendant que l'échec expliqué (`percent` au lieu de `count`) est frais.
+
+## Moi
+
+Oui, explique d'abord
+
+## Claude Code
+
+## La brique 8 : ce que le sujet demande
+> Un intervalle de confiance, une comparaison A/B, ou la réplication d'un résultat publié, **et une phrase sur ce que vos données ne permettent pas de conclure.**
+
+Ton benchmark donne des chiffres comme « 27 justes sur 30 ». Mais avec seulement 30 réponses, ce 90 % est incertain : avec d'autres questions, tu aurais pu trouver 80 % ou 97 %. L'intervalle de confiance donne la fourchette plausible.
+
+## Pourquoi pas la formule vue au début
+La formule de la conversation claude.ai est p ± 1,96 × √(p(1−p)/n). Elle s'appelle l'**intervalle de Wald**, et elle casse justement sur tes résultats :
+
+| Résultat | Avec Wald | Problème |
+|---|---|---|
+| Ton système : 27/30 (90 %) | 79,3 % à **100,7 %** | Dépasse 100 %, ce qui est impossible |
+| Qwen seul : 0/30 (0 %) | **0 % à 0 %** | Un intervalle de largeur nulle, comme si on était absolument certain |
+
+Je propose donc l'**intervalle de Wilson**, la correction classique pour les proportions proches de 0 % ou 100 %. Il reste toujours entre 0 et 100 %, et il donne une vraie fourchette même pour 0/30. La formule est un peu plus longue, mais elle s'écrit en 5 lignes de Python et s'explique : c'est le même principe, corrigé pour les bords.
+
+## Ce que ça donne sur tes résultats (calculs à la main, à confirmer par le code)
+
+| | Ton système | Qwen seul |
+|---|---|---|
+| **Réponses justes** | 27/30 → **74 % à 97 %** | 0/30 → **0 % à 11 %** |
+| **Chiffres faux laissés sortir** | 1/30 → **1 % à 17 %** | 15/30 → **33 % à 67 %** |
+
+Les intervalles ne se chevauchent pas, ni pour les réponses justes ni pour les réponses fausses. Même en tenant compte de l'incertitude, la différence entre les deux candidats est nette.
+
+## La version prudente, et pourquoi elle compte
+Tes 30 réponses ne sont **pas 30 observations indépendantes** : ce sont les mêmes 10 questions posées 3 fois. Et les 3 lancements ont donné exactement le même score (9, 9, 9). Les répétitions apportent donc peu d'information nouvelle.
+
+Je propose de montrer aussi l'intervalle calculé sur les **10 questions** (9/10 pour ton système) : **60 % à 98 %**. Il est beaucoup plus large, et c'est plus honnête. Présenter les deux montre à l'enseignant que tu as compris d'où vient l'incertitude.
+
+## Ce qui sera écrit
+- **`stats.py`** : une fonction `wilson(k, n)` qui renvoie la fourchette basse et la fourchette haute. Le script lit `results/runs.json`, calcule les intervalles et écrit `results/intervals.json`.
+- **Des tests (R2)** :
+  - un résultat connu calculé à la main ;
+  - 0/n donne une fourchette basse de 0 ;
+  - n/n donne une fourchette haute de 1 ;
+  - l'intervalle reste toujours entre 0 et 1 ;
+  - un plus grand échantillon donne un intervalle plus étroit.
+
+## La phrase sur ce que les données ne permettent pas de conclure
+C'est à toi de l'écrire avec tes mots. Voici les pistes :
+- **Peu de questions, toutes du même type.** 10 questions de comptage, médiane, maximum et pourcentage sur un seul jeu de données : rien ne dit que le système ferait aussi bien sur d'autres questions ou d'autres données.
+- **Des répétitions non indépendantes.** Les 30 réponses viennent des mêmes 10 questions.
+- **Une comparaison déséquilibrée.** Qwen seul n'a pas accès aux données. Le benchmark montre que l'outil change tout, mais **il ne mesure pas l'effet de l'arbitre seul**. Pour ça, il faudrait un troisième candidat : le système sans arbitre.
+- **Une seule date de données.** Le téléchargement IMDb du 3 novembre 2026.
+
+## Trois décisions pour toi
+1. **Wilson plutôt que Wald.** C'est ma recommandation, pour les raisons ci-dessus.
+2. **Deux proportions par candidat** : les réponses justes et les chiffres faux. La deuxième est le vrai sujet de ton projet.
+3. **Montrer aussi la version prudente sur 10 questions**, en plus de celle sur 30 réponses.
+
+## Moi
+
+Oui, écris-le
+
+*[outil : Write] /Users/keemyah/Documents/CodingForAI/final/stats.py*
+
+*[outil : Write] /Users/keemyah/Documents/CodingForAI/final/tests/test_stats.py*
+
+*[outil : Bash] Run tests and compute the confidence intervals*
+
+## Claude Code
+
+La brique 8 est calculée, et les valeurs correspondent à mon calcul à la main. La version prudente fait apparaître une nuance importante. Rien n'est encore commité.
+
+## Ce que j'ai écrit
+- **[stats.py](stats.py)** :
+  - la fonction `wilson(k, n)` (5 lignes de calcul) ;
+  - `per_answer`, qui compte les 30 réponses ;
+  - `per_question`, la version prudente : une question compte comme juste si au moins 2 de ses 3 lancements sont justes, et de même pour les réponses fausses.
+
+  Le résultat est écrit dans `results/intervals.json`.
+- **[tests/test_stats.py](tests/test_stats.py)** : 17 tests.
+  - La valeur connue 27/30 donne 74,4 % à 96,5 %, comme le calcul à la main.
+  - 0/30 donne un vrai intervalle, pas un intervalle réduit à zéro.
+  - 30/30 ne dépasse jamais 100 %.
+  - Pour chaque k de 0 à 10, l'intervalle reste entre 0 et 1 et contient la proportion observée.
+  - Un échantillon plus grand donne un intervalle plus étroit.
+  - n = 0 est refusé.
+  - La règle de la majorité de `per_question` est vérifiée.
+
+  Au total, **69 tests passent**.
+
+## Les résultats (intervalles de confiance à 95 %)
+
+| | Ton système | Qwen seul | Les fourchettes se chevauchent ? |
+|---|---|---|---|
+| **Justes, sur 30 réponses** | 90 % (74 à 97 %) | 0 % (0 à 11 %) | Non |
+| **Faux, sur 30 réponses** | 3 % (1 à 17 %) | 50 % (33 à 67 %) | Non |
+| **Justes, sur 10 questions (prudent)** | 90 % (60 à 98 %) | 0 % (0 à 28 %) | Non |
+| **Faux, sur 10 questions (prudent)** | 0 % (0 à 28 %) | 50 % (24 à 76 %) | **Oui, légèrement** |
+
+## La nuance à retenir
+- **Les réponses justes** : la différence est nette dans les deux versions. Ton système répond juste bien plus souvent que Qwen seul.
+- **Les chiffres faux** : dans la version prudente, les deux fourchettes se chevauchent un peu (0 à 28 % contre 24 à 76 %). Avec seulement 10 questions, on ne peut donc pas affirmer avec certitude que ton système laisse sortir moins de chiffres faux. Ça reste très probable, mais pas démontré à 95 %.
+
+C'est exactement le genre de phrase que la brique 8 demande. Il faudrait plus de questions pour trancher.
+
+## Ce qu'il te reste à écrire
+La phrase sur ce que tes données ne permettent pas de conclure, **avec tes mots**. Tu peux t'appuyer sur :
+- cette nuance sur les chiffres faux ;
+- les 10 questions, toutes du même type ;
+- les 3 répétitions, qui ne sont pas indépendantes ;
+- la comparaison qui ne mesure pas l'effet de l'arbitre seul ;
+- les données d'une seule date.
+
+Une ou deux phrases suffisent. Envoie-les-moi, et je les intégrerai à la section Brique 8 d'EVIDENCE.md.
+
+## Moi
+
+Oui, commite
+
+*[outil : Bash] Commit the confidence interval code and results*
+
+## Claude Code
+
+C'est commité : `40a1233 Brique 8 : intervalles de Wilson sur les resultats du benchmark`. Le dépôt est propre.
+
+## Où en est le projet
+
+| Élément | État |
+|---|---|
+| Briques 1, 3 et 6 | Terminées, dans EVIDENCE.md |
+| Brique 9 | Résultats commités, **section EVIDENCE à écrire** |
+| Brique 8 | Intervalles commités, **section EVIDENCE à écrire, avec ta phrase** |
+| R2, tests | 69 tests qui passent |
+| R3, journal de l'IA | À compléter : benchmark, notation corrigée, intervalles |
+| R1 | Test sur un clone tout neuf à faire à la fin |
+
+**Les 5 briques sont construites.** Il reste surtout à les documenter.
+
+## Ce dont j'ai besoin de toi
+Une ou deux phrases, avec tes mots, sur **ce que tes données ne permettent pas de conclure**. Le sujet l'exige pour la brique 8, et c'est une phrase qu'on pourrait te demander d'expliquer à la soutenance. Elle doit donc venir de toi. Si tu veux un point de départ, pose-toi la question : « si un enseignant me dit "ton système est donc meilleur que Qwen", qu'est-ce que je dois répondre pour être honnête ? »
+
+Dès que tu me l'envoies, j'écris les sections Brique 9 et Brique 8 d'EVIDENCE.md. Je te les montre avant le commit.
+
+## Moi
+
+que mon modele est bien meilleur comme demontré par les resultas de la brique et de la brique 9 en comparaison avec le modele qwen seul.
+
+## Claude Code
+
+Ta phrase est juste, mais elle répond à une autre question que celle du sujet.
+
+**Ce que tu as écrit, c'est la conclusion** : ce que tes données montrent. Elle est vraie pour les réponses justes : 90 % pour ton système contre 0 % pour Qwen seul, et les fourchettes ne se chevauchent pas, même dans la version prudente. Elle ira dans EVIDENCE.md, en tête des briques 8 et 9.
+
+**Le sujet demande la phrase inverse** : ce que tes données ne permettent **pas** de conclure. C'est une preuve d'honnêteté, et elle est notée. Si tu dis seulement « mon modèle est bien meilleur » à la soutenance, l'enseignant demandera : « meilleur sur quoi, et jusqu'où peux-tu l'affirmer ? »
+
+Deux remarques sur ta phrase :
+- **« Mon modèle »** : le modèle reste Qwen dans les deux cas. Ce qui est meilleur, c'est **ton système** (Qwen, l'outil et l'arbitre). La distinction compte à la soutenance.
+- **« Bien meilleur »** : c'est vrai pour les réponses justes, mais pas démontré pour les chiffres faux dans la version prudente sur 10 questions, où les fourchettes se chevauchent (0 à 28 % contre 24 à 76 %).
+
+Pour t'aider, voici les limites possibles. Choisis-en une ou deux, et écris-les avec tes mots :
+
+1. **Les chiffres faux** : sur 10 questions seulement, on ne peut pas affirmer avec certitude que le système laisse sortir moins de chiffres faux que Qwen seul.
+2. **La généralisation** : 10 questions du même type, sur un seul jeu de données : rien ne dit que ça marcherait sur d'autres questions.
+3. **La cause** : Qwen seul n'a pas accès aux données. Le résultat montre que l'outil change tout, mais pas ce qu'apporte l'arbitre seul.
+4. **Les répétitions** : les 30 réponses viennent des mêmes 10 questions, donc ce ne sont pas 30 observations indépendantes.
+
+Une phrase du type « Mes données ne permettent pas de conclure que…, parce que… » suffit.
+
+## Moi
+
+mes données ne permettent pas de generaliser car le nombre de questions et limité
+
+*[outil : Bash] Locate sections to update*
+
+*[outil : Read] /Users/keemyah/Documents/CodingForAI/final/EVIDENCE.md*
+
+*[outil : Read] /Users/keemyah/Documents/CodingForAI/final/README.md*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/EVIDENCE.md*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/README.md*
+
+*[outil : Edit] /Users/keemyah/Documents/CodingForAI/final/README.md*
+
+*[outil : Bash] Show changed files*
+
+## Claude Code
+
+J'ai écrit les sections Brique 9 et Brique 8 dans [EVIDENCE.md](EVIDENCE.md) et mis à jour le [README.md](README.md). Les 5 briques sont maintenant documentées. Rien n'est encore commité.
+
+## Tes phrases, telles qu'elles apparaissent
+- **La conclusion (brique 9)** : « mon système est bien meilleur que Qwen seul », suivie des chiffres qui la justifient (27 justes sur 30 contre 0, 1 faux contre 15). J'ai écrit « mon système » au lieu de « mon modèle », comme on en a parlé.
+- **La limite (brique 8)** : « mes données ne permettent pas de généraliser car le nombre de questions est limité ». C'est ta phrase, avec une seule correction d'orthographe (« et » → « est »).
+
+## Le reste de la section Brique 9
+- La façon dont les réponses attendues sont calculées sans `tools.py`.
+- La règle de notation.
+- Le tableau des résultats, avec la moyenne et l'écart-type.
+- **L'échec expliqué à partir de sa trace** : le lancement 1 de la tâche 6, où Qwen a choisi `percent` au lieu de `count`. Les deux autres refus sont aussi expliqués.
+- La correction de la notation, et la précision que `benchmark_log.txt` contient les anciens verdicts.
+
+## Le reste de la section Brique 8
+- Pourquoi Wilson plutôt que la formule simple : avec elle, on obtient 100,7 % et un intervalle réduit à 0.
+- Les deux versions (30 réponses et 10 questions), avec le tableau des intervalles.
+- La lecture des résultats : les réponses justes sont nettement séparées. Pour les chiffres faux, les intervalles se chevauchent légèrement dans la version prudente. J'ai présenté ce point comme un résultat, pas comme ta phrase de limite.
+
+## README
+- L'état indique maintenant que tout fonctionne.
+- Une étape 7 explique comment lancer le benchmark et les intervalles.
+
+**Pour la soutenance**, ta limite est juste, mais prépare-toi à la développer si on te la demande. Pourquoi 10 questions ne suffisent-elles pas ? Regarde la largeur de l'intervalle : de 60 % à 98 % sur 10 questions, contre 74 % à 97 % sur 30 réponses.
+
+## Moi
+
+Oui, commite
+
+*[outil : Bash] Commit EVIDENCE and README updates*
+
+## Claude Code
+
+C'est commité : `2a54d81 EVIDENCE briques 8 et 9, README : benchmark et intervalles`. Le dépôt est propre et compte 11 commits.
+
+## Où en est le projet
+
+| Élément | Points | État |
+|---|---|---|
+| Briques 1, 3, 6, 8 et 9 | 10 | **Construites, avec preuves dans EVIDENCE.md** |
+| R1 + R2 : il tourne depuis le README, les tests passent | 3 | 69 tests passent. **Pas encore vérifié sur un clone tout neuf** |
+| R3 : journal de l'IA | 2 | **À compléter** pour le benchmark et les intervalles |
+| R4 : soutenance | 5 | À préparer : relire le code ligne par ligne |
+
+## Ce qu'il reste à faire
+- **R1 : le test sur un clone tout neuf.** Je peux le faire sur ton Mac : cloner le dépôt dans un dossier temporaire, puis suivre le README mot à mot (environnement Python, téléchargement des données, nettoyage, tests, une question à Qwen). C'est le seul moyen de vérifier qu'un correcteur pourra lancer ton projet. Le téléchargement des données refait environ 230 Mo. Je supprimerai le dossier temporaire à la fin.
+- **R3 : la note de séance** pour le benchmark et les intervalles. Elle doit couvrir ce qui a été écrit par l'IA, la notation corrigée, et tes décisions : la règle de notation stricte, Wilson, la version prudente, ta phrase de limite.
+- **GitHub** : il faudra créer le dépôt en ligne et y envoyer tes commits. Tu dois créer le dépôt toi-même sur ton compte. Ensuite, je peux t'aider pour les commandes.
+
+## Moi
+
+Note R3 d'abord
+
+## Claude Code
+
+Avant de rédiger, deux questions courtes, comme la dernière fois. Je ne veux rien écrire à ta place sur ce que tu as lu ou compris.
+
+1. **Relecture** : as-tu lu `expected.py`, `benchmark.py` et `stats.py` ? Y a-t-il une partie qui n'est pas claire ? Par exemple la formule de Wilson, ou la fonction `grade()`.
+2. **Modifications** : as-tu changé quelque chose à la main depuis la dernière note ? D'après ce que j'ai vu, non.
+
+Le reste, je le connais déjà grâce à la conversation, et je l'écrirai tel quel :
+- **Écrit par l'IA, gardé tel quel** : `expected.py`, `benchmark.py`, `stats.py`, leurs tests, le petit changement dans `agent.py`, les sections 8 et 9 d'EVIDENCE.md et l'étape 7 du README.
+- **La notation corrigée** : c'est l'IA qui a trouvé l'erreur après le benchmark, et toi qui as validé la correction.
+- **Tes décisions** :
+  - tu as validé les 10 questions, la notation stricte et le prompt de Qwen seul ;
+  - tu as choisi Wilson et la version prudente sur 10 questions ;
+  - tu as écrit les deux phrases : la conclusion et la limite.
+
+Une fois la note écrite, je referai aussi l'export de cette session pour `conversation_claude_code.md`, puisque le précédent s'arrêtait avant le benchmark.
+
+## Moi
+
+oui tout est bon
+
+*[outil : Bash] Append session 3 to the AI log note*
 
 *[outil : ToolSearch] *
