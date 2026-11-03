@@ -1,13 +1,6 @@
-# Séance du 2026-10-03 : setup
+# Séance du 2026-11-03 (1) : setup, données et nettoyage
 
-Objectif : installer Qwen en local et fixer le contexte.
-
-- Gardé tel quel : le Modelfile (2 lignes)
-- Corrigé à la main : Rien
-- Pseudo-code ou prompt réécrit : Rien
-
-cat > ai_log/2026-11-03_setup/note.md << 'EOF'
-# Séance du 2026-11-03 : setup, données et nettoyage
+Outil d'IA : Claude (claude.ai), conversation exportée dans conversation.md.
 
 Objectif : installer Qwen en local et fixer le contexte, choisir le thème et les données, nettoyer les données, mettre en place Git, le README et EVIDENCE.md.
 
@@ -32,4 +25,29 @@ Objectif : installer Qwen en local et fixer le contexte, choisir le thème et le
 
 ## Sources
 - Sens d'un endYear manquant : page d'aide officielle d'IMDb, "How do I change the end year of a series?".
-EOF
+
+
+# Séance du 2026-11-03 (2) : outil de calcul, boucle avec Qwen, arbitre
+
+Outil d'IA : Claude Code (application desktop), session exportée dans conversation_claude_code.md.
+
+Objectif : tester l'outil de calcul, écrire la boucle où Qwen appelle l'outil (brique 1), écrire l'arbitre qui refuse les chiffres non calculés (brique 3), remplir EVIDENCE.md pour ces deux briques.
+
+## Gardé tel quel
+- Les fichiers écrits par l'IA : tools.py, tests/test_tools.py, agent.py (y compris son prompt système), tests/test_agent.py, arbiter.py, tests/test_arbiter.py, les sections Brique 1 et Brique 3 d'EVIDENCE.md, les ajouts au README (étapes 5 et 6), les lignes ajoutées à .gitignore et requirements.txt (pytest, requests).
+- L'IA a aussi supprimé trois fichiers vides créés par erreur (conftest.pypip, install, pytest) et deux traces en double ou inutiles.
+- J'ai lu agent.py et arbiter.py. Dans agent.py, le dernier bloc (`if __name__ == "__main__":`) n'est pas encore clair pour moi : à revoir avant la soutenance.
+
+## Corrigé à la main
+- Rien.
+
+## Pseudo-code ou prompt réécrit
+- Rien.
+
+## Décisions prises par moi
+- J'ai demandé une explication avant chaque étape, puis validé chaque étape et chaque commit.
+- Règles de l'arbitre, proposées par l'IA et validées par moi : un arrondi est refusé (seul le nombre exact est accepté), pas de seconde chance donnée au modèle après un refus, une réponse sans nombre est acceptée.
+- Liste de constantes dans l'arbitre (1000 et 10) : l'IA m'a proposé deux options après une fausse alerte (une réponse juste refusée à cause de « 1 000 votes » et « sur 10 »). J'ai choisi la liste de constantes plutôt que de garder l'arbitre strict, parce que ça évite des erreurs.
+
+## Sources
+- Aucune nouvelle source externe.
