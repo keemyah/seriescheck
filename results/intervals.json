@@ -1,0 +1,62 @@
+{
+  "systeme": {
+    "justes_sur_30_reponses": {
+      "k": 27,
+      "n": 30,
+      "proportion": 0.9,
+      "ic95_bas": 0.744,
+      "ic95_haut": 0.965
+    },
+    "faux_sur_30_reponses": {
+      "k": 1,
+      "n": 30,
+      "proportion": 0.033,
+      "ic95_bas": 0.006,
+      "ic95_haut": 0.167
+    },
+    "justes_sur_10_questions": {
+      "k": 9,
+      "n": 10,
+      "proportion": 0.9,
+      "ic95_bas": 0.596,
+      "ic95_haut": 0.982
+    },
+    "faux_sur_10_questions": {
+      "k": 0,
+      "n": 10,
+      "proportion": 0.0,
+      "ic95_bas": 0.0,
+      "ic95_haut": 0.278
+    }
+  },
+  "qwen_seul": {
+    "justes_sur_30_reponses": {
+      "k": 0,
+      "n": 30,
+      "proportion": 0.0,
+      "ic95_bas": 0.0,
+      "ic95_haut": 0.114
+    },
+    "faux_sur_30_reponses": {
+      "k": 15,
+      "n": 30,
+      "proportion": 0.5,
+      "ic95_bas": 0.332,
+      "ic95_haut": 0.668
+    },
+    "justes_sur_10_questions": {
+      "k": 0,
+      "n": 10,
+      "proportion": 0.0,
+      "ic95_bas": 0.0,
+      "ic95_haut": 0.278
+    },
+    "faux_sur_10_questions": {
+      "k": 5,
+      "n": 10,
+      "proportion": 0.5,
+      "ic95_bas": 0.237,
+      "ic95_haut": 0.763
+    }
+  }
+}
