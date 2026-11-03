@@ -70,6 +70,27 @@ def test_tool_result_is_sent_back_to_model(df):
     assert '"result": 2' in last_message["content"]
 
 
+def test_invented_number_is_blocked_by_arbiter(df):
+    # Le modèle reçoit 2 de l'outil, puis essaie de répondre 3 : la règle doit le bloquer.
+    chat = fake_model([
+        tool_call("compute", {"operation": "count", "year": 2015}),
+        {"role": "assistant", "content": "3 séries ont commencé en 2015."},
+    ])
+    trace = ask("Combien de séries en 2015 ?", df, chat=chat)
+    assert trace["answer"] == "3 séries ont commencé en 2015."
+    assert not trace["verdict"]["accepted"]
+    assert trace["final"].startswith("Réponse refusée")
+
+
+def test_correct_answer_passes_arbiter(df):
+    chat = fake_model([
+        tool_call("compute", {"operation": "count", "year": 2015}),
+        {"role": "assistant", "content": "2 séries ont commencé en 2015."},
+    ])
+    trace = ask("Combien de séries en 2015 ?", df, chat=chat)
+    assert trace["final"] == "2 séries ont commencé en 2015."
+
+
 def test_unknown_tool_is_refused(df):
     assert "error" in run_tool("delete_files", {}, df)
 

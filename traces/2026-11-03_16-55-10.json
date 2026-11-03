@@ -1,0 +1,26 @@
+{
+  "question": "Quelle est la note médiane des séries à note fiable ?",
+  "model": "qwen35-4b-8k",
+  "steps": [
+    {
+      "tool": "compute",
+      "arguments": {
+        "operation": "median",
+        "column": "averageRating",
+        "reliable_only": true
+      },
+      "result": {
+        "result": 7.3,
+        "rows_used": 10382
+      }
+    }
+  ],
+  "answer": "La note médiane des séries à note fiable est de 7,3.",
+  "error": null,
+  "verdict": {
+    "accepted": true,
+    "unverified": []
+  },
+  "final": "La note médiane des séries à note fiable est de 7,3.",
+  "seconds": 15.0
+}

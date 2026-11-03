@@ -1,0 +1,29 @@
+{
+  "question": "Quelle est la note médiane des séries à note fiable ?",
+  "model": "qwen35-4b-8k",
+  "steps": [
+    {
+      "tool": "compute",
+      "arguments": {
+        "operation": "median",
+        "column": "averageRating",
+        "reliable_only": true
+      },
+      "result": {
+        "result": 7.3,
+        "rows_used": 10382
+      }
+    }
+  ],
+  "answer": "La note médiane des séries avec au moins 1 000 votes est de 7,3 sur 10.",
+  "error": null,
+  "verdict": {
+    "accepted": false,
+    "unverified": [
+      1000.0,
+      10.0
+    ]
+  },
+  "final": "Réponse refusée : chiffre non calculé [1000.0, 10.0]",
+  "seconds": 6.6
+}

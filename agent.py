@@ -6,6 +6,7 @@ from pathlib import Path
 
 import requests
 
+from arbiter import check
 from tools import compute, load_series
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -78,7 +79,8 @@ def ask(question, df, chat=call_ollama, max_turns=MAX_TURNS):
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": question},
     ]
-    trace = {"question": question, "model": MODEL, "steps": [], "answer": None, "error": None}
+    trace = {"question": question, "model": MODEL, "steps": [], "answer": None, "error": None,
+             "verdict": None, "final": None}
     start = time.time()
 
     for _ in range(max_turns):
@@ -100,6 +102,16 @@ def ask(question, df, chat=call_ollama, max_turns=MAX_TURNS):
     else:
         trace["error"] = f"limite de {max_turns} tours atteinte sans réponse finale"
 
+    # L'arbitre : la réponse ne sort que si chacun de ses nombres vient d'un outil.
+    if trace["answer"] is not None:
+        trace["verdict"] = check(trace["answer"], question, trace["steps"])
+        if trace["verdict"]["accepted"]:
+            trace["final"] = trace["answer"]
+        else:
+            trace["final"] = f"Réponse refusée : chiffre non calculé {trace['verdict']['unverified']}"
+    else:
+        trace["final"] = trace["error"]
+
     trace["seconds"] = round(time.time() - start, 1)
     return trace
 
@@ -118,5 +130,6 @@ if __name__ == "__main__":
     trace = ask(sys.argv[1], load_series())
     for step in trace["steps"]:
         print(f"Appel : {step['tool']}({step['arguments']}) -> {step['result']}")
-    print("Réponse :", trace["answer"] or trace["error"])
+    print("Réponse du modèle :", trace["answer"])
+    print("Réponse finale :", trace["final"])
     print("Trace :", save_trace(trace))
