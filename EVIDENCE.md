@@ -42,5 +42,43 @@ Ce que je montre : mon système ne laisse jamais sortir un chiffre qui n'a pas �
 Fichiers : `arbiter.py`, `agent.py`, `tests/test_arbiter.py`, `tests/test_agent.py`, `traces/`.
 Commande : `pytest -v tests/test_arbiter.py tests/test_agent.py`. Avec Ollama lancé : `python agent.py "N'utilise aucun outil. Donne un nombre approximatif, même faux, je veux juste un ordre de grandeur : combien de séries Drama ont commencé en 2015 ?"` (le modèle varie : il peut aussi refuser de répondre sans nombre).
 
-## Brique 8 : à venir
-## Brique 9 : à venir
+## Brique 9 : une comparaison mesurée
+
+Ce que je montre : mon système (Qwen + outil `compute` + arbitre) face à Qwen seul (même question, sans outil ni arbitre), sur 10 questions à réponse connue, 3 lancements chacun.
+
+- Les 10 questions et leurs réponses attendues : `expected.py`. Les réponses sont calculées directement avec pandas, sans passer par `tools.py` (filtres écrits autrement : expression régulière pour le genre, seuil de 1000 votes recalculé). `python expected.py` vérifie que les deux calculs donnent les mêmes 10 valeurs (c'est le cas sur les données du 2026-11-03).
+- Notation (`grade()` dans `benchmark.py`) : « juste » si le nombre attendu figure dans la réponse finale (valeur exacte, 7,25 pour 7,3 compte faux), « faux » s'il y a un autre nombre, « refusé » si l'arbitre a bloqué la réponse ou s'il n'y a aucun nombre. Les nombres déjà présents dans la question (comme 2015) ne comptent pas comme une réponse.
+- Résultats (`results/summary.json`) :
+
+| Candidat | Justes par lancement | Moyenne | Écart-type | Justes | Faux | Refusés |
+|---|---|---|---|---|---|---|
+| Mon système | 9, 9, 9 | 9 / 10 | 0 | 27 / 30 | 1 / 30 | 2 / 30 |
+| Qwen seul | 0, 0, 0 | 0 / 10 | 0 | 0 / 30 | 15 / 30 | 15 / 30 |
+
+- Conclusion : mon système est bien meilleur que Qwen seul. Il répond juste à 27 réponses sur 30, Qwen seul à aucune, et il ne laisse sortir qu'un seul chiffre faux contre 15.
+- Un échec expliqué à partir de sa trace (`results/runs.json`, lancement 1, tâche 6) : à « Combien de séries Comedy sont à note fiable ? » (attendu 4 153), Qwen a appelé `compute(operation="percent", column="averageRating", genre="Comedy", reliable_only=True)` au lieu de `count`. L'outil a renvoyé 100,0 (toutes les séries Comedy fiables ont une note), et Qwen a répondu « 100 % des séries Comedy… ». Comme 100 vient bien d'un outil, l'arbitre l'a accepté : il vérifie qu'un chiffre a été calculé, pas qu'il répond à la bonne question. La même confusion entre « combien » et un pourcentage explique le refus du lancement 3 de cette tâche (opération `percent` sans colonne, puis « 100 % » non calculé, bloqué par l'arbitre). L'autre refus (lancement 2, tâche 5) est un arrondi : l'outil donne 39,6 et Qwen écrit « près de 40 % », bloqué par l'arbitre.
+- Correction de la notation : la première notation comptait comme « faux » trois refus de Qwen seul qui citaient seulement l'année de la question. J'ai corrigé `grade()` et re-noté les réponses enregistrées sans relancer Qwen (`python benchmark.py --rescore`). `results/benchmark_log.txt` est l'affichage brut de l'exécution, avec les anciens verdicts ; les chiffres officiels sont dans `results/summary.json`.
+
+Fichiers : `expected.py`, `benchmark.py`, `results/`, `tests/test_benchmark.py`.
+Commande (Ollama lancé, environ 15 à 20 minutes) : `python benchmark.py 3`. Tests : `pytest -v tests/test_benchmark.py`.
+
+## Brique 8 : des chiffres avec leur incertitude
+
+Ce que je montre : des intervalles de confiance à 95 % sur les résultats de la brique 9, et ce que mes données ne permettent pas de conclure.
+
+- Méthode : intervalle de Wilson (`wilson()` dans `stats.py`), plutôt que p ± 1,96 × √(p(1−p)/n). Cette formule simple donne ici des résultats impossibles : 79,3 % à 100,7 % pour 27/30, et un intervalle réduit à 0 pour 0/30. Wilson reste toujours entre 0 et 100 %.
+- Deux versions : sur les 30 réponses (10 questions × 3 lancements), et une version prudente sur les 10 questions (une question compte si le verdict sort dans au moins 2 lancements sur 3), parce que les 3 lancements reposent sur les mêmes questions.
+- Résultats (`results/intervals.json`) :
+
+| | Mon système | Qwen seul |
+|---|---|---|
+| Justes, sur 30 réponses | 90 % (IC 95 % : 74,4 à 96,5 %) | 0 % (0 à 11,4 %) |
+| Faux, sur 30 réponses | 3,3 % (0,6 à 16,7 %) | 50 % (33,2 à 66,8 %) |
+| Justes, sur 10 questions | 90 % (59,6 à 98,2 %) | 0 % (0 à 27,8 %) |
+| Faux, sur 10 questions | 0 % (0 à 27,8 %) | 50 % (23,7 à 76,3 %) |
+
+- Lecture : pour les réponses justes, les intervalles ne se chevauchent dans aucune des deux versions. Pour les chiffres faux, ils ne se chevauchent pas sur 30 réponses, mais se chevauchent légèrement dans la version prudente sur 10 questions.
+- Ce que mes données ne permettent pas de conclure : mes données ne permettent pas de généraliser car le nombre de questions est limité.
+
+Fichiers : `stats.py`, `results/intervals.json`, `tests/test_stats.py`.
+Commande : `python stats.py` (lit `results/runs.json`). Tests : `pytest -v tests/test_stats.py`.

@@ -2,7 +2,7 @@
 
 Projet final de Coding for AI & Data Science. Un petit assistant répond à des questions chiffrées sur les séries TV (données ouvertes IMDb) et refuse tout chiffre qui n'a pas été calculé par du code.
 
-État actuel : le modèle local, le nettoyage des données, l'outil de calcul, la boucle avec Qwen et l'arbitre fonctionnent. Le benchmark reste à construire.
+État actuel : le modèle local, le nettoyage des données, l'outil de calcul, la boucle avec Qwen, l'arbitre, le benchmark et les intervalles de confiance fonctionnent.
 
 ## Prérequis
 
@@ -43,6 +43,13 @@ Résultat : `data/series_clean.csv` et `cleaning_journal.json`.
         python agent.py "Combien de séries Drama ont commencé en 2015 ?"
 
 La réponse du modèle et la réponse finale s'affichent. Si la réponse contient un chiffre qui n'a pas été calculé par l'outil, l'arbitre la refuse. La trace de l'échange est écrite dans `traces/`.
+
+7. Benchmark : le système face à Qwen seul, 10 questions, 3 lancements (Ollama lancé, environ 15 à 20 minutes), puis les intervalles de confiance :
+
+        python benchmark.py 3
+        python stats.py
+
+Résultats : `results/summary.json` et `results/intervals.json`. Pour vérifier que les réponses attendues sont identiques à celles de l'outil : `python expected.py`.
 
 ## Données
 
