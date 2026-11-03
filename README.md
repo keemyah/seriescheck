@@ -6,7 +6,7 @@ Projet final de Coding for AI & Data Science. Un petit assistant répond à des 
 
 ## Prérequis
 
-- Python 3.9 ou plus récent
+- Python 3.9 à 3.12 (testé avec Python 3.9.6 ; les versions fixées dans `requirements.txt`, comme numpy 2.0.2, ne s'installent pas forcément sur une version plus récente)
 - Ollama (https://ollama.com)
 - Environ 8 Go de RAM et 4 Go de disque pour le modèle, plus environ 300 Mo pour les données
 
