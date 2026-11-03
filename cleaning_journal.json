@@ -1,0 +1,54 @@
+[
+  {
+    "operation": "lignes au départ",
+    "lignes": 307637,
+    "raison": "séries (titleType = tvSeries)"
+  },
+  {
+    "operation": "lignes retirées : contenu adulte",
+    "lignes": 3169,
+    "raison": "hors sujet et titres explicites"
+  },
+  {
+    "operation": "valeurs \\N converties en manquant",
+    "lignes": 425238,
+    "raison": "vraies valeurs manquantes"
+  },
+  {
+    "operation": "lignes retirées : année de début future",
+    "lignes": 287,
+    "raison": "séries pas encore sorties"
+  },
+  {
+    "operation": "durées remplacées par manquant",
+    "lignes": 829,
+    "raison": "durée > 300 min jugée aberrante"
+  },
+  {
+    "operation": "effet sur la durée",
+    "moyenne_avant": 87.9,
+    "moyenne_apres": 41.7,
+    "mediane_avant": 30.0,
+    "mediane_apres": 30.0
+  },
+  {
+    "operation": "séries à statut incertain (endYear manquant)",
+    "lignes": 183632,
+    "raison": "IMDb Help Center : endYear omis si en cours, mais peut aussi être non mis à jour"
+  },
+  {
+    "operation": "séries avec note fiable (votes >= seuil)",
+    "lignes": 10382,
+    "raison": "seuil de 1000 votes : décision de l'auteur, justifiée par le biais de sélection et l'incertitude en 1/racine(n)"
+  },
+  {
+    "operation": "séries sans note (conservées)",
+    "lignes": 189931,
+    "raison": "pas de note dans le fichier de notes"
+  },
+  {
+    "operation": "lignes à la fin",
+    "lignes": 304181,
+    "raison": "jeu nettoyé"
+  }
+]
