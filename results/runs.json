@@ -1,0 +1,1502 @@
+[
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "Il y a eu 11 333 séries ayant commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "year": 2015
+          },
+          "result": {
+            "result": 11333,
+            "rows_used": 11333
+          }
+        }
+      ],
+      "answer": "Il y a eu 11 333 séries ayant commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a eu 11 333 séries ayant commencé en 2015.",
+      "seconds": 14.8
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il y a 1 591 séries de genre Drama qui ont commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "column": "startYear",
+            "year": 2015,
+            "genre": "Drama"
+          },
+          "result": {
+            "result": 1591,
+            "rows_used": 1591
+          }
+        }
+      ],
+      "answer": "Il y a 1 591 séries de genre Drama qui ont commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 1 591 séries de genre Drama qui ont commencé en 2015.",
+      "seconds": 6.5
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "La note médiane des séries à note fiable est de 7,3 sur une base de 10 382 séries.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 7.3,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note médiane des séries à note fiable est de 7,3 sur une base de 10 382 séries.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note médiane des séries à note fiable est de 7,3 sur une base de 10 382 séries.",
+      "seconds": 5.8
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "La note maximale des séries fiables (avec au moins 1000 votes) est de 9,7.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "max",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 9.7,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note maximale des séries fiables (avec au moins 1000 votes) est de 9,7.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note maximale des séries fiables (avec au moins 1000 votes) est de 9,7.",
+      "seconds": 5.5
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "La part des séries avec une date de fin renseignée est de 39,6 %.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear"
+          },
+          "result": {
+            "result": 39.6,
+            "rows_used": 304181
+          }
+        }
+      ],
+      "answer": "La part des séries avec une date de fin renseignée est de 39,6 %.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La part des séries avec une date de fin renseignée est de 39,6 %.",
+      "seconds": 4.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "100 % des séries Comedy dans le jeu de données comptent parmi les séries à note fiable (au moins 1 000 votes).",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "averageRating",
+            "genre": "Comedy",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 100.0,
+            "rows_used": 4153
+          }
+        }
+      ],
+      "answer": "100 % des séries Comedy dans le jeu de données comptent parmi les séries à note fiable (au moins 1 000 votes).",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "100 % des séries Comedy dans le jeu de données comptent parmi les séries à note fiable (au moins 1 000 votes).",
+      "seconds": 6.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "Il y a eu 13 061 séries qui ont commencé en 2020 dans les données IMDb utilisées.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "year": 2020
+          },
+          "result": {
+            "result": 13061,
+            "rows_used": 13061
+          }
+        }
+      ],
+      "answer": "Il y a eu 13 061 séries qui ont commencé en 2020 dans les données IMDb utilisées.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a eu 13 061 séries qui ont commencé en 2020 dans les données IMDb utilisées.",
+      "seconds": 5.1
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "Toutes les séries de genre Crime qui ont une note fiable (au moins 1000 votes) sont à 100 % fiables sur les 1 911 séries concernées.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "averageRating",
+            "genre": "Crime",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 100.0,
+            "rows_used": 1911
+          }
+        }
+      ],
+      "answer": "Toutes les séries de genre Crime qui ont une note fiable (au moins 1000 votes) sont à 100 % fiables sur les 1 911 séries concernées.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Toutes les séries de genre Crime qui ont une note fiable (au moins 1000 votes) sont à 100 % fiables sur les 1 911 séries concernées.",
+      "seconds": 6.9
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "Le nombre médian de votes des séries à note fiable est de 3321.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "numVotes",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 3321.0,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "Le nombre médian de votes des séries à note fiable est de 3321.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Le nombre médian de votes des séries à note fiable est de 3321.",
+      "seconds": 5.3
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "systeme",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "Parmi les séries ayant commencé en 2010, 40 % ont une date de fin renseignée.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear",
+            "year": 2010
+          },
+          "result": {
+            "result": 40.0,
+            "rows_used": 7133
+          }
+        }
+      ],
+      "answer": "Parmi les séries ayant commencé en 2010, 40 % ont une date de fin renseignée.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Parmi les séries ayant commencé en 2010, 40 % ont une date de fin renseignée.",
+      "seconds": 6.8
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "Je ne peux pas répondre à cette question avec un nombre exact car les données sur l'instantané de toutes les séries de télévisions qui ont commencé en 2015 n'existent pas dans ma base de connaissances.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Je ne peux pas répondre à cette question avec un nombre exact car les données sur l'instantané de toutes les séries de télévisions qui ont commencé en 2015 n'existent pas dans ma base de connaissances.",
+      "seconds": 4.3
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il est impossible de répondre par un seul nombre car la plateforme de diffusion (comme Netflix, HBO, ou une chaîne locale) n'est pas précisée dans votre question.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de répondre par un seul nombre car la plateforme de diffusion (comme Netflix, HBO, ou une chaîne locale) n'est pas précisée dans votre question.",
+      "seconds": 2.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "Je ne peux pas répondre à cette question car la note médiane n'existe pas : les examens à « note fiable » (comme le B2i ou l'E3) utilisent un système de compétences qualitatif, non chiffré en moyenne sur une échelle standard.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Je ne peux pas répondre à cette question car la note médiane n'existe pas : les examens à « note fiable » (comme le B2i ou l'E3) utilisent un système de compétences qualitatif, non chiffré en moyenne sur une échelle standard.",
+      "seconds": 3.8
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "La note maximale des séries à note fiable est 10.",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "La note maximale des séries à note fiable est 10.",
+      "seconds": 1.7
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "100 %",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "answer": "100 %",
+      "seconds": 0.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "14",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "14",
+      "seconds": 0.5
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "Il est impossible de déterminer un nombre exact car cela dépend de l'annuaire télévisuel spécifique utilisé pour vérifier les données.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de déterminer un nombre exact car cela dépend de l'annuaire télévisuel spécifique utilisé pour vérifier les données.",
+      "seconds": 1.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "Il n'existe aucune série nommée \"Crime\" qui soit notée comme fiable par les services d'évaluation ou les bases de données officielles.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il n'existe aucune série nommée \"Crime\" qui soit notée comme fiable par les services d'évaluation ou les bases de données officielles.",
+      "seconds": 2.2
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "20",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "20",
+      "seconds": 0.6
+    }
+  },
+  {
+    "run": 1,
+    "candidate": "qwen_seul",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "Une estimation réaliste est d'environ 35 % des séries télévisées ayant débuté en 2010 ont atteint leur date de fin.",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Une estimation réaliste est d'environ 35 % des séries télévisées ayant débuté en 2010 ont atteint leur date de fin.",
+      "seconds": 2.2
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "Il y a eu 11 333 séries qui ont commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "column": "startYear",
+            "year": 2015
+          },
+          "result": {
+            "result": 11333,
+            "rows_used": 11333
+          }
+        }
+      ],
+      "answer": "Il y a eu 11 333 séries qui ont commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a eu 11 333 séries qui ont commencé en 2015.",
+      "seconds": 9.8
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il y a 1591 séries de genre Drama qui ont commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "year": 2015,
+            "genre": "Drama"
+          },
+          "result": {
+            "result": 1591,
+            "rows_used": 1591
+          }
+        }
+      ],
+      "answer": "Il y a 1591 séries de genre Drama qui ont commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 1591 séries de genre Drama qui ont commencé en 2015.",
+      "seconds": 5.7
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "La note médiane des séries à note fiable est de 7,3.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 7.3,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note médiane des séries à note fiable est de 7,3.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note médiane des séries à note fiable est de 7,3.",
+      "seconds": 5.2
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "La note maximale des séries à note fiable est de 9,7 pour 10 382 séries.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "max",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 9.7,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note maximale des séries à note fiable est de 9,7 pour 10 382 séries.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note maximale des séries à note fiable est de 9,7 pour 10 382 séries.",
+      "seconds": 5.5
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "Réponse refusée : chiffre non calculé [40.0]",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear"
+          },
+          "result": {
+            "result": 39.6,
+            "rows_used": 304181
+          }
+        }
+      ],
+      "answer": "Près de 40 % des séries ont une date de fin renseignée.",
+      "error": null,
+      "verdict": {
+        "accepted": false,
+        "unverified": [
+          40.0
+        ]
+      },
+      "final": "Réponse refusée : chiffre non calculé [40.0]",
+      "seconds": 4.5
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "Il y a 4 153 séries de type Comedy avec au moins 1000 votes.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "genre": "Comedy",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 4153,
+            "rows_used": 4153
+          }
+        }
+      ],
+      "answer": "Il y a 4 153 séries de type Comedy avec au moins 1000 votes.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 4 153 séries de type Comedy avec au moins 1000 votes.",
+      "seconds": 5.8
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "13 061 séries ont commencé en 2020.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "year": 2020
+          },
+          "result": {
+            "result": 13061,
+            "rows_used": 13061
+          }
+        }
+      ],
+      "answer": "13 061 séries ont commencé en 2020.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "13 061 séries ont commencé en 2020.",
+      "seconds": 4.6
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "Il y a 1 911 séries de genre Crime avec une note fiable (au moins 1 000 votes).",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "genre": "Crime",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 1911,
+            "rows_used": 1911
+          }
+        }
+      ],
+      "answer": "Il y a 1 911 séries de genre Crime avec une note fiable (au moins 1 000 votes).",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 1 911 séries de genre Crime avec une note fiable (au moins 1 000 votes).",
+      "seconds": 5.8
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "Le nombre médian de votes des séries à note fiable est de 3 321 sur les 10 382 séries prises en compte.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "numVotes",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 3321.0,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "Le nombre médian de votes des séries à note fiable est de 3 321 sur les 10 382 séries prises en compte.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Le nombre médian de votes des séries à note fiable est de 3 321 sur les 10 382 séries prises en compte.",
+      "seconds": 5.9
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "systeme",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "Parmi les séries commencées en 2010, 40 % ont une date de fin renseignée.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear",
+            "year": 2010
+          },
+          "result": {
+            "result": 40.0,
+            "rows_used": 7133
+          }
+        }
+      ],
+      "answer": "Parmi les séries commencées en 2010, 40 % ont une date de fin renseignée.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Parmi les séries commencées en 2010, 40 % ont une date de fin renseignée.",
+      "seconds": 5.5
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "Il est impossible de répondre à cette question par un seul nombre car le terme \"séries\" est trop vague (il peut désigner des séries télévisées, mathématiques ou d'autres produits) et aucune donnée précise n'est fournie pour calculer ce chiffre spécifique.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de répondre à cette question par un seul nombre car le terme \"séries\" est trop vague (il peut désigner des séries télévisées, mathématiques ou d'autres produits) et aucune donnée précise n'est fournie pour calculer ce chiffre spécifique.",
+      "seconds": 4.4
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il est impossible de fournir un nombre exact sans une liste spécifique de séries ou d'une source de données complète, car cette information varie selon les plateformes et les critères utilisés pour la classification.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de fournir un nombre exact sans une liste spécifique de séries ou d'une source de données complète, car cette information varie selon les plateformes et les critères utilisés pour la classification.",
+      "seconds": 2.4
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "Il est impossible de donner un nombre unique car la note médiane varie considérablement selon l'établissement, le cours et les barèmes d'admissibilité spécifiques.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de donner un nombre unique car la note médiane varie considérablement selon l'établissement, le cours et les barèmes d'admissibilité spécifiques.",
+      "seconds": 2.4
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "La note maximale d'une série à 21 est de 20 points.",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "La note maximale d'une série à 21 est de 20 points.",
+      "seconds": 1.5
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "50 % des séries ont une date de fin renseignée.",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "answer": "50 % des séries ont une date de fin renseignée.",
+      "seconds": 0.9
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "Il n'y a pas d'information accessible dans mes données pour déterminer le nombre de séries comédies avec une notation \"fiable\", car ce terme est subjectif et varie selon les sources de cotes (comme IMDb, Rotten Tomatoes, ou des sites de critique spécifiques).",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il n'y a pas d'information accessible dans mes données pour déterminer le nombre de séries comédies avec une notation \"fiable\", car ce terme est subjectif et varie selon les sources de cotes (comme IMDb, Rotten Tomatoes, ou des sites de critique spécifiques).",
+      "seconds": 6.8
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "Il est impossible de répondre par un nombre unique car la date de début d'une série varie considérablement selon le pays et les chaînes de télévision concernées.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de répondre par un nombre unique car la date de début d'une série varie considérablement selon le pays et les chaînes de télévision concernées.",
+      "seconds": 2.9
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "24",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "24",
+      "seconds": 1.2
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "Il n'existe pas de valeur numérique précise pour répondre à cette question car la notion même d'« moyenne » ou « médiane » ne s'applique pas aux individus, et les scores varient considérablement selon les sources et les années.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il n'existe pas de valeur numérique précise pour répondre à cette question car la notion même d'« moyenne » ou « médiane » ne s'applique pas aux individus, et les scores varient considérablement selon les sources et les années.",
+      "seconds": 2.5
+    }
+  },
+  {
+    "run": 2,
+    "candidate": "qwen_seul",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "Je ne peux pas répondre à cette question car aucune donnée ou étude fiable n'indique qu'une telle proportion ; il est impossible de déterminer un nombre précis pour \"la plupart\" des séries TV.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Je ne peux pas répondre à cette question car aucune donnée ou étude fiable n'indique qu'une telle proportion ; il est impossible de déterminer un nombre précis pour \"la plupart\" des séries TV.",
+      "seconds": 2.7
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "11333 séries ont commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "year": 2015
+          },
+          "result": {
+            "result": 11333,
+            "rows_used": 11333
+          }
+        }
+      ],
+      "answer": "11333 séries ont commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "11333 séries ont commencé en 2015.",
+      "seconds": 5.8
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il y a 1591 séries Drama qui ont commencé en 2015.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "column": "startYear",
+            "year": 2015,
+            "genre": "Drama"
+          },
+          "result": {
+            "result": 1591,
+            "rows_used": 1591
+          }
+        }
+      ],
+      "answer": "Il y a 1591 séries Drama qui ont commencé en 2015.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 1591 séries Drama qui ont commencé en 2015.",
+      "seconds": 7.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "La note médiane des séries avec au moins 1000 votes est de 7,3.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 7.3,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note médiane des séries avec au moins 1000 votes est de 7,3.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note médiane des séries avec au moins 1000 votes est de 7,3.",
+      "seconds": 13.0
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "La note maximale des séries à note fiable est de 9,7.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "max",
+            "column": "averageRating",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 9.7,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "La note maximale des séries à note fiable est de 9,7.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La note maximale des séries à note fiable est de 9,7.",
+      "seconds": 8.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "39,6 % des séries ont une date de fin renseignée.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear"
+          },
+          "result": {
+            "result": 39.6,
+            "rows_used": 304181
+          }
+        }
+      ],
+      "answer": "39,6 % des séries ont une date de fin renseignée.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "39,6 % des séries ont une date de fin renseignée.",
+      "seconds": 13.5
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "Réponse refusée : chiffre non calculé [100.0]",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "genre": "Comedy",
+            "reliable_only": true
+          },
+          "result": {
+            "error": "colonne inconnue : None. Valeurs permises : ['startYear', 'endYear', 'runtimeMinutes', 'averageRating', 'numVotes']"
+          }
+        }
+      ],
+      "answer": "Il semble qu'il faille indiquer une colonne pour calculer le pourcentage, car l'opération `percent` nécessite spécifiquement un paramètre de colonne en plus du genre et de la fiabilité.\n\nJe peux vous donner le nombre total de séries Comedy fiables, mais je ne puis pas calculer ce \"nombre sur 100%\" sans une colonne spécifique à analyser.",
+      "error": null,
+      "verdict": {
+        "accepted": false,
+        "unverified": [
+          100.0
+        ]
+      },
+      "final": "Réponse refusée : chiffre non calculé [100.0]",
+      "seconds": 13.7
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "Il y a eu 13 061 séries qui ont commencé en 2020.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "column": "startYear",
+            "year": 2020
+          },
+          "result": {
+            "result": 13061,
+            "rows_used": 13061
+          }
+        }
+      ],
+      "answer": "Il y a eu 13 061 séries qui ont commencé en 2020.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a eu 13 061 séries qui ont commencé en 2020.",
+      "seconds": 9.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "Il y a 1 911 séries de type Crime qui ont une note fiable (au moins 1 000 votes).",
+    "verdict": "juste",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "count",
+            "genre": "Crime",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 1911,
+            "rows_used": 1911
+          }
+        }
+      ],
+      "answer": "Il y a 1 911 séries de type Crime qui ont une note fiable (au moins 1 000 votes).",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Il y a 1 911 séries de type Crime qui ont une note fiable (au moins 1 000 votes).",
+      "seconds": 8.6
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "Le nombre médian de votes des séries avec une note fiable est de 3321.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "median",
+            "column": "numVotes",
+            "reliable_only": true
+          },
+          "result": {
+            "result": 3321.0,
+            "rows_used": 10382
+          }
+        }
+      ],
+      "answer": "Le nombre médian de votes des séries avec une note fiable est de 3321.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "Le nombre médian de votes des séries avec une note fiable est de 3321.",
+      "seconds": 6.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "systeme",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "La part des séries commencées en 2010 qui ont une date de fin est de 40 %.",
+    "verdict": "juste",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "steps": [
+        {
+          "tool": "compute",
+          "arguments": {
+            "operation": "percent",
+            "column": "endYear",
+            "year": 2010
+          },
+          "result": {
+            "result": 40.0,
+            "rows_used": 7133
+          }
+        }
+      ],
+      "answer": "La part des séries commencées en 2010 qui ont une date de fin est de 40 %.",
+      "error": null,
+      "verdict": {
+        "accepted": true,
+        "unverified": []
+      },
+      "final": "La part des séries commencées en 2010 qui ont une date de fin est de 40 %.",
+      "seconds": 6.7
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 1,
+    "question": "Combien de séries ont commencé en 2015 ?",
+    "expected": 11333,
+    "final": "Plus de 600 nouvelles séries sont entrées en production ou ont été diffusées au cours de l'année 2015 à travers le monde, bien que la date précise du premier lancement global reste floue.",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Plus de 600 nouvelles séries sont entrées en production ou ont été diffusées au cours de l'année 2015 à travers le monde, bien que la date précise du premier lancement global reste floue.",
+      "seconds": 4.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 2,
+    "question": "Combien de séries Drama ont commencé en 2015 ?",
+    "expected": 1591,
+    "final": "Il est impossible de fournir un nombre précis sans savoir dans quelle région (pays ou chaîne spécifique) vous souhaitez compter les séries dramatiques ayant débuté en 2015.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries Drama ont commencé en 2015 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Il est impossible de fournir un nombre précis sans savoir dans quelle région (pays ou chaîne spécifique) vous souhaitez compter les séries dramatiques ayant débuté en 2015.",
+      "seconds": 2.3
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 3,
+    "question": "Quelle est la note médiane des séries à note fiable ?",
+    "expected": 7.3,
+    "final": "4,50",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle est la note médiane des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "4,50",
+      "seconds": 0.9
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 4,
+    "question": "Quelle est la note maximale des séries à note fiable ?",
+    "expected": 9.7,
+    "final": "10",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle est la note maximale des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "10",
+      "seconds": 0.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 5,
+    "question": "Quelle part des séries a une date de fin renseignée ?",
+    "expected": 39.6,
+    "final": "83 %",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quelle part des séries a une date de fin renseignée ?",
+      "model": "qwen35-4b-8k",
+      "answer": "83 %",
+      "seconds": 0.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 6,
+    "question": "Combien de séries Comedy sont à note fiable ?",
+    "expected": 4153,
+    "final": "4",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries Comedy sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "4",
+      "seconds": 0.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 7,
+    "question": "Combien de séries ont commencé en 2020 ?",
+    "expected": 13061,
+    "final": "Le chiffre exact est difficile à déterminer car il varie considérablement selon les réseaux de télévision et les régions géographiques.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Combien de séries ont commencé en 2020 ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Le chiffre exact est difficile à déterminer car il varie considérablement selon les réseaux de télévision et les régions géographiques.",
+      "seconds": 1.3
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 8,
+    "question": "Combien de séries Crime sont à note fiable ?",
+    "expected": 1911,
+    "final": "0",
+    "verdict": "faux",
+    "trace": {
+      "question": "Combien de séries Crime sont à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "0",
+      "seconds": 0.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 9,
+    "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+    "expected": 3321.0,
+    "final": "17",
+    "verdict": "faux",
+    "trace": {
+      "question": "Quel est le nombre médian de votes des séries à note fiable ?",
+      "model": "qwen35-4b-8k",
+      "answer": "17",
+      "seconds": 0.4
+    }
+  },
+  {
+    "run": 3,
+    "candidate": "qwen_seul",
+    "task": 10,
+    "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+    "expected": 40.0,
+    "final": "Je ne peux pas répondre à cette question car je n'ai pas accès à des données statistiques précises sur les séries télévisées lancées en 2010 et leur statut actuel.",
+    "verdict": "refusé",
+    "trace": {
+      "question": "Quelle part des séries commencées en 2010 a une date de fin ?",
+      "model": "qwen35-4b-8k",
+      "answer": "Je ne peux pas répondre à cette question car je n'ai pas accès à des données statistiques précises sur les séries télévisées lancées en 2010 et leur statut actuel.",
+      "seconds": 3.5
+    }
+  }
+]

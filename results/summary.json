@@ -1,0 +1,30 @@
+{
+  "systeme": {
+    "justes_par_lancement": [
+      9,
+      9,
+      9
+    ],
+    "moyenne": 9,
+    "ecart_type": 0.0,
+    "sur": 10,
+    "total_justes": 27,
+    "total_faux": 1,
+    "total_refuses": 2,
+    "total_reponses": 30
+  },
+  "qwen_seul": {
+    "justes_par_lancement": [
+      0,
+      0,
+      0
+    ],
+    "moyenne": 0,
+    "ecart_type": 0.0,
+    "sur": 10,
+    "total_justes": 0,
+    "total_faux": 15,
+    "total_refuses": 15,
+    "total_reponses": 30
+  }
+}

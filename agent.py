@@ -47,12 +47,15 @@ TOOL = {
 ALLOWED_ARGS = {"operation", "column", "year", "genre", "reliable_only"}
 
 
-def call_ollama(messages):
-    """Envoie la conversation à Qwen et renvoie son message de réponse."""
+def call_ollama(messages, tools=(TOOL,)):
+    """Envoie la conversation à Qwen et renvoie son message de réponse.
+
+    tools=() envoie la question sans aucun outil (utilisé pour « Qwen seul » dans le benchmark).
+    """
     payload = {
         "model": MODEL,
         "messages": messages,
-        "tools": [TOOL],
+        "tools": list(tools),
         "stream": False,
         "think": False,
     }

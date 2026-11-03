@@ -1,0 +1,90 @@
+lancement 1 | systeme   | tâche  1 | juste  | Il y a eu 11 333 séries ayant commencé en 2015.
+lancement 1 | systeme   | tâche  2 | juste  | Il y a 1 591 séries de genre Drama qui ont commencé en 2015.
+lancement 1 | systeme   | tâche  3 | juste  | La note médiane des séries à note fiable est de 7,3 sur une base de 10 382 séries.
+lancement 1 | systeme   | tâche  4 | juste  | La note maximale des séries fiables (avec au moins 1000 votes) est de 9,7.
+lancement 1 | systeme   | tâche  5 | juste  | La part des séries avec une date de fin renseignée est de 39,6 %.
+lancement 1 | systeme   | tâche  6 | faux   | 100 % des séries Comedy dans le jeu de données comptent parmi les séries à note fiable (au moins 1 000 votes).
+lancement 1 | systeme   | tâche  7 | juste  | Il y a eu 13 061 séries qui ont commencé en 2020 dans les données IMDb utilisées.
+lancement 1 | systeme   | tâche  8 | juste  | Toutes les séries de genre Crime qui ont une note fiable (au moins 1000 votes) sont à 100 % fiables sur les 1 911 séries concernées.
+lancement 1 | systeme   | tâche  9 | juste  | Le nombre médian de votes des séries à note fiable est de 3321.
+lancement 1 | systeme   | tâche 10 | juste  | Parmi les séries ayant commencé en 2010, 40 % ont une date de fin renseignée.
+lancement 1 | qwen_seul | tâche  1 | faux   | Je ne peux pas répondre à cette question avec un nombre exact car les données sur l'instantané de toutes les séries de télévisions qui ont commencé en 2015 n'existent pas dans ma base de connaissances.
+lancement 1 | qwen_seul | tâche  2 | refusé | Il est impossible de répondre par un seul nombre car la plateforme de diffusion (comme Netflix, HBO, ou une chaîne locale) n'est pas précisée dans votre question.
+lancement 1 | qwen_seul | tâche  3 | refusé | Je ne peux pas répondre à cette question car la note médiane n'existe pas : les examens à « note fiable » (comme le B2i ou l'E3) utilisent un système de compétences qualitatif, non chiffré en moyenne sur une échelle standard.
+lancement 1 | qwen_seul | tâche  4 | faux   | La note maximale des séries à note fiable est 10.
+lancement 1 | qwen_seul | tâche  5 | faux   | 100 %
+lancement 1 | qwen_seul | tâche  6 | faux   | 14
+lancement 1 | qwen_seul | tâche  7 | refusé | Il est impossible de déterminer un nombre exact car cela dépend de l'annuaire télévisuel spécifique utilisé pour vérifier les données.
+lancement 1 | qwen_seul | tâche  8 | refusé | Il n'existe aucune série nommée "Crime" qui soit notée comme fiable par les services d'évaluation ou les bases de données officielles.
+lancement 1 | qwen_seul | tâche  9 | faux   | 20
+lancement 1 | qwen_seul | tâche 10 | faux   | Une estimation réaliste est d'environ 35 % des séries télévisées ayant débuté en 2010 ont atteint leur date de fin.
+lancement 2 | systeme   | tâche  1 | juste  | Il y a eu 11 333 séries qui ont commencé en 2015.
+lancement 2 | systeme   | tâche  2 | juste  | Il y a 1591 séries de genre Drama qui ont commencé en 2015.
+lancement 2 | systeme   | tâche  3 | juste  | La note médiane des séries à note fiable est de 7,3.
+lancement 2 | systeme   | tâche  4 | juste  | La note maximale des séries à note fiable est de 9,7 pour 10 382 séries.
+lancement 2 | systeme   | tâche  5 | refusé | Réponse refusée : chiffre non calculé [40.0]
+lancement 2 | systeme   | tâche  6 | juste  | Il y a 4 153 séries de type Comedy avec au moins 1000 votes.
+lancement 2 | systeme   | tâche  7 | juste  | 13 061 séries ont commencé en 2020.
+lancement 2 | systeme   | tâche  8 | juste  | Il y a 1 911 séries de genre Crime avec une note fiable (au moins 1 000 votes).
+lancement 2 | systeme   | tâche  9 | juste  | Le nombre médian de votes des séries à note fiable est de 3 321 sur les 10 382 séries prises en compte.
+lancement 2 | systeme   | tâche 10 | juste  | Parmi les séries commencées en 2010, 40 % ont une date de fin renseignée.
+lancement 2 | qwen_seul | tâche  1 | refusé | Il est impossible de répondre à cette question par un seul nombre car le terme "séries" est trop vague (il peut désigner des séries télévisées, mathématiques ou d'autres produits) et aucune donnée précise n'est fournie pour calculer ce chiffre spécifique.
+lancement 2 | qwen_seul | tâche  2 | refusé | Il est impossible de fournir un nombre exact sans une liste spécifique de séries ou d'une source de données complète, car cette information varie selon les plateformes et les critères utilisés pour la classification.
+lancement 2 | qwen_seul | tâche  3 | refusé | Il est impossible de donner un nombre unique car la note médiane varie considérablement selon l'établissement, le cours et les barèmes d'admissibilité spécifiques.
+lancement 2 | qwen_seul | tâche  4 | faux   | La note maximale d'une série à 21 est de 20 points.
+lancement 2 | qwen_seul | tâche  5 | faux   | 50 % des séries ont une date de fin renseignée.
+lancement 2 | qwen_seul | tâche  6 | refusé | Il n'y a pas d'information accessible dans mes données pour déterminer le nombre de séries comédies avec une notation "fiable", car ce terme est subjectif et varie selon les sources de cotes (comme IMDb, Rotten Tomatoes, ou des sites de critique spécifiques).
+lancement 2 | qwen_seul | tâche  7 | refusé | Il est impossible de répondre par un nombre unique car la date de début d'une série varie considérablement selon le pays et les chaînes de télévision concernées.
+lancement 2 | qwen_seul | tâche  8 | faux   | 24
+lancement 2 | qwen_seul | tâche  9 | refusé | Il n'existe pas de valeur numérique précise pour répondre à cette question car la notion même d'« moyenne » ou « médiane » ne s'applique pas aux individus, et les scores varient considérablement selon les sources et les années.
+lancement 2 | qwen_seul | tâche 10 | refusé | Je ne peux pas répondre à cette question car aucune donnée ou étude fiable n'indique qu'une telle proportion ; il est impossible de déterminer un nombre précis pour "la plupart" des séries TV.
+lancement 3 | systeme   | tâche  1 | juste  | 11333 séries ont commencé en 2015.
+lancement 3 | systeme   | tâche  2 | juste  | Il y a 1591 séries Drama qui ont commencé en 2015.
+lancement 3 | systeme   | tâche  3 | juste  | La note médiane des séries avec au moins 1000 votes est de 7,3.
+lancement 3 | systeme   | tâche  4 | juste  | La note maximale des séries à note fiable est de 9,7.
+lancement 3 | systeme   | tâche  5 | juste  | 39,6 % des séries ont une date de fin renseignée.
+lancement 3 | systeme   | tâche  6 | refusé | Réponse refusée : chiffre non calculé [100.0]
+lancement 3 | systeme   | tâche  7 | juste  | Il y a eu 13 061 séries qui ont commencé en 2020.
+lancement 3 | systeme   | tâche  8 | juste  | Il y a 1 911 séries de type Crime qui ont une note fiable (au moins 1 000 votes).
+lancement 3 | systeme   | tâche  9 | juste  | Le nombre médian de votes des séries avec une note fiable est de 3321.
+lancement 3 | systeme   | tâche 10 | juste  | La part des séries commencées en 2010 qui ont une date de fin est de 40 %.
+lancement 3 | qwen_seul | tâche  1 | faux   | Plus de 600 nouvelles séries sont entrées en production ou ont été diffusées au cours de l'année 2015 à travers le monde, bien que la date précise du premier lancement global reste floue.
+lancement 3 | qwen_seul | tâche  2 | faux   | Il est impossible de fournir un nombre précis sans savoir dans quelle région (pays ou chaîne spécifique) vous souhaitez compter les séries dramatiques ayant débuté en 2015.
+lancement 3 | qwen_seul | tâche  3 | faux   | 4,50
+lancement 3 | qwen_seul | tâche  4 | faux   | 10
+lancement 3 | qwen_seul | tâche  5 | faux   | 83 %
+lancement 3 | qwen_seul | tâche  6 | faux   | 4
+lancement 3 | qwen_seul | tâche  7 | refusé | Le chiffre exact est difficile à déterminer car il varie considérablement selon les réseaux de télévision et les régions géographiques.
+lancement 3 | qwen_seul | tâche  8 | faux   | 0
+lancement 3 | qwen_seul | tâche  9 | faux   | 17
+lancement 3 | qwen_seul | tâche 10 | faux   | Je ne peux pas répondre à cette question car je n'ai pas accès à des données statistiques précises sur les séries télévisées lancées en 2010 et leur statut actuel.
+{
+  "systeme": {
+    "justes_par_lancement": [
+      9,
+      9,
+      9
+    ],
+    "moyenne": 9,
+    "ecart_type": 0.0,
+    "sur": 10,
+    "total_justes": 27,
+    "total_faux": 1,
+    "total_refuses": 2,
+    "total_reponses": 30
+  },
+  "qwen_seul": {
+    "justes_par_lancement": [
+      0,
+      0,
+      0
+    ],
+    "moyenne": 0,
+    "ecart_type": 0.0,
+    "sur": 10,
+    "total_justes": 0,
+    "total_faux": 18,
+    "total_refuses": 12,
+    "total_reponses": 30
+  }
+}
