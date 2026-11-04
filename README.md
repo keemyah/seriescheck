@@ -50,6 +50,12 @@ Mode conversation, pour poser plusieurs questions à la suite (sans guillemets) 
 
 Tape ta question après `Question :`. Pour arrêter : `quitter`, une ligne vide ou Ctrl+C. Chaque question est indépendante : l'agent ne se souvient pas de la précédente.
 
+Interface web (même agent, dans le navigateur) :
+
+        streamlit run app.py
+
+Puis ouvrir http://localhost:8501. La réponse finale s'affiche en vert si l'arbitre l'accepte, en rouge s'il la refuse ; « Détails » montre l'appel à l'outil et la réponse brute du modèle. La page n'est visible que depuis la machine (`.streamlit/config.toml`). Arrêt : Ctrl+C dans le terminal.
+
 7. Benchmark : le système face à Qwen seul, 10 questions, 3 lancements (Ollama lancé, environ 15 à 20 minutes), puis les intervalles de confiance :
 
         python benchmark.py 3

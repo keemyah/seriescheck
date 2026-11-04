@@ -81,3 +81,31 @@ Objectif : comparer mon système à Qwen seul (brique 9), calculer des intervall
 
 ## Sources
 - Aucune nouvelle source externe.
+
+
+# Séance du 2026-11-04 (4) : mise en ligne, mode conversation, interface web
+
+Outil d'IA : Claude Code (application desktop), même session.
+
+Objectif : mettre le projet sur GitHub, rendre l'agent plus simple à utiliser pour la démo, préparer la soutenance.
+
+## Gardé tel quel
+- Les fichiers écrits par l'IA : le mode conversation dans agent.py (fonctions `answer_and_show` et `conversation`, nouveau bloc `if __name__ == "__main__":`), le masquage de l'avertissement urllib3, app.py (interface Streamlit), .streamlit/config.toml, les ajouts au README (étape 6) et à EVIDENCE.md (brique 1), requirements.txt régénéré avec `pip freeze` (Streamlit 1.50.0 et ses dépendances).
+- L'outil, la boucle `ask()` et l'arbitre n'ont pas changé : le terminal et la page web les appellent tous les deux.
+
+## Corrigé à la main
+- Rien.
+
+## Pseudo-code ou prompt réécrit
+- Rien.
+
+## Décisions prises par moi
+- Dépôt GitHub privé (keemyah/seriescheck). L'adresse e-mail de mes commits contenait une faute de frappe (gmai.com) : j'ai choisi de la corriger en gmail.com dans les 12 commits déjà faits.
+- Mode conversation dans le terminal, puis interface web Streamlit, testée sur une branche à part avant de la garder.
+- Choix de l'IA que j'ai validés : page visible seulement depuis mon Mac (et pas depuis le réseau), pas de statistiques d'usage envoyées à Streamlit.
+
+## Observation
+- Une faute de frappe dans ma question (« 20215 » au lieu de 2015) : une première fois, Qwen a deviné 2021 de lui-même, et l'arbitre a refusé la réponse car 2021 ne venait ni de la question ni d'un résultat d'outil (`traces/2026-11-04_13-40-17.json`). Une seconde fois, Qwen a gardé 20215 et répondu 0, accepté. Même question, deux comportements : c'est pour ça que je teste mon code et que je mesure Qwen.
+
+## Sources
+- Aucune nouvelle source externe.

@@ -1,0 +1,7 @@
+# Réglages lus automatiquement par "streamlit run app.py"
+[server]
+address = "localhost"   # la page n'est visible que depuis ce Mac, pas depuis le réseau
+headless = true         # ne pas ouvrir le navigateur tout seul
+
+[browser]
+gatherUsageStats = false  # pas de statistiques d'usage envoyées à Streamlit
