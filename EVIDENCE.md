@@ -25,7 +25,7 @@ Ce que je montre : une fonction que j'ai écrite, `compute`, que Qwen appelle da
 - Tests : `tests/test_tools.py` (13 tests de l'outil sur 8 séries écrites à la main) et `tests/test_agent.py` (7 tests de la boucle avec un faux modèle : exécution de l'outil, résultat renvoyé au modèle, arrêt après le nombre maximum de tours, outil ou paramètre inconnu refusé).
 
 Fichiers : `tools.py`, `agent.py`, `traces/`, `tests/`.
-Commande (Ollama lancé) : `python agent.py "Combien de séries Drama ont commencé en 2015 ?"` crée une nouvelle trace dans `traces/`. Tests : `pytest -v`.
+Commande (Ollama lancé) : `python agent.py "Combien de séries Drama ont commencé en 2015 ?"` crée une nouvelle trace dans `traces/`. `python agent.py` sans question ouvre un mode conversation (une trace par question). Tests : `pytest -v`.
 
 ## Brique 3 : une règle imposée par le code
 

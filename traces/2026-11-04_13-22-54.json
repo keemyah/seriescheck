@@ -1,0 +1,26 @@
+{
+  "question": "combien de series sont sorties en 2026 ?",
+  "model": "qwen35-4b-8k",
+  "steps": [
+    {
+      "tool": "compute",
+      "arguments": {
+        "operation": "count",
+        "column": "startYear",
+        "year": 2026
+      },
+      "result": {
+        "result": 6986,
+        "rows_used": 6986
+      }
+    }
+  ],
+  "answer": "Il y a 6986 séries sorties en 2026.",
+  "error": null,
+  "verdict": {
+    "accepted": true,
+    "unverified": []
+  },
+  "final": "Il y a 6986 séries sorties en 2026.",
+  "seconds": 5.6
+}

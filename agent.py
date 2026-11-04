@@ -1,8 +1,13 @@
 import json
 import sys
 import time
+import warnings
 from datetime import datetime
 from pathlib import Path
+
+# Le Python de macOS utilise LibreSSL, et urllib3 (utilisé par requests) affiche un avertissement
+# à l'import. Sans effet ici : on parle à Ollama en local, sans HTTPS. Doit venir avant "import requests".
+warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
 
 import requests
 
@@ -126,13 +131,38 @@ def save_trace(trace):
     return path
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print('Usage : python agent.py "ta question"')
-        sys.exit(1)
-    trace = ask(sys.argv[1], load_series())
+STOP_WORDS = {"", "quitter", "exit", "q"}
+
+
+def answer_and_show(question, df):
+    """Pose une question, affiche les appels et les réponses, enregistre la trace."""
+    trace = ask(question, df)
     for step in trace["steps"]:
         print(f"Appel : {step['tool']}({step['arguments']}) -> {step['result']}")
     print("Réponse du modèle :", trace["answer"])
     print("Réponse finale :", trace["final"])
     print("Trace :", save_trace(trace))
+
+
+def conversation(df):
+    """Mode conversation : une question par ligne, jusqu'à « quitter », une ligne vide ou Ctrl+C."""
+    print(f"Données chargées : {len(df)} séries. Tape « quitter » pour arrêter.")
+    while True:
+        try:
+            question = input("\nQuestion : ").strip()
+            if question.lower() in STOP_WORDS:
+                break
+            answer_and_show(question, df)
+        except (KeyboardInterrupt, EOFError):  # Ctrl+C (même pendant que Qwen répond) ou Ctrl+D
+            break
+        except requests.RequestException as error:  # Ollama arrêté ou trop lent : on garde la conversation
+            print("Ollama ne répond pas :", error)
+    print("\nAu revoir.")
+
+
+if __name__ == "__main__":
+    df = load_series()
+    if len(sys.argv) >= 2:
+        answer_and_show(sys.argv[1], df)  # python agent.py "ta question"
+    else:
+        conversation(df)  # python agent.py

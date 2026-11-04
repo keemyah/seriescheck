@@ -44,6 +44,12 @@ Résultat : `data/series_clean.csv` et `cleaning_journal.json`.
 
 La réponse du modèle et la réponse finale s'affichent. Si la réponse contient un chiffre qui n'a pas été calculé par l'outil, l'arbitre la refuse. La trace de l'échange est écrite dans `traces/`.
 
+Mode conversation, pour poser plusieurs questions à la suite (sans guillemets) :
+
+        python agent.py
+
+Tape ta question après `Question :`. Pour arrêter : `quitter`, une ligne vide ou Ctrl+C. Chaque question est indépendante : l'agent ne se souvient pas de la précédente.
+
 7. Benchmark : le système face à Qwen seul, 10 questions, 3 lancements (Ollama lancé, environ 15 à 20 minutes), puis les intervalles de confiance :
 
         python benchmark.py 3
